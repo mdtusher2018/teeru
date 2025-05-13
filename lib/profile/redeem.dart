@@ -1,0 +1,44 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:flutter/material.dart';
+import 'package:trreu/colors.dart';
+import 'package:trreu/res/commonWidgets.dart';
+
+class RedeemCodeScreen extends StatelessWidget {
+   RedeemCodeScreen({super.key});
+
+  TextEditingController redeemController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: commonAppBar(
+        "Redeem Code",
+        color: AppColors.primaryColor,
+        textcolor: AppColors.white,
+      ),
+      backgroundColor: AppColors.primaryColor,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            commonText("Enter Code", size: 16),
+            SizedBox(height: 8),
+            commonTextfield(
+              redeemController,
+              prefixIcon: Image.asset(
+                "assets/icons/giftcard.png",
+                color: AppColors.black,
+              ),
+              borderColor: AppColors.white,
+              hintText: "Type here",
+            ),
+            SizedBox(height: 24),
+            commonButton("Add New Card"),
+          ],
+        ),
+      ),
+    );
+  }
+}

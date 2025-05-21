@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
-import 'package:trreu/root_page.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
+import 'package:trreu/views/root_page.dart';
 
 class SignUpSplashScreen extends StatefulWidget {
   const SignUpSplashScreen({super.key});

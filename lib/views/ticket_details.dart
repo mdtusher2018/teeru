@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/checkout_page.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/checkout_page.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class TicketDetailsScreen extends StatefulWidget {
   const TicketDetailsScreen({super.key});

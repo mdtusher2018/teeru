@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/auth/forget_password.dart';
-import 'package:trreu/auth/password_change_successfully.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/auth/forget_password.dart';
+import 'package:trreu/views/auth/password_change_successfully.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class OTPScreen extends StatelessWidget {
-   OTPScreen({super.key});
+  OTPScreen({super.key});
 
   TextEditingController otpController = TextEditingController();
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class SplashPasswordPage extends StatelessWidget {
   const SplashPasswordPage({super.key});

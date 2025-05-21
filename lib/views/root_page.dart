@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/profile/profile_page.dart';
-import 'package:trreu/ticket.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/profile/profile_page.dart';
+import 'package:trreu/views/ticket.dart';
 import 'home_page.dart';
 
 class RootPage extends StatefulWidget {

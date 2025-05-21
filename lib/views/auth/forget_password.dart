@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/auth/otp_page.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/auth/otp_page.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();

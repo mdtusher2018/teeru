@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/auth/login_page.dart';
-import 'package:trreu/colors.dart';
+import 'package:trreu/views/auth/login_page.dart';
+import 'package:trreu/views/colors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

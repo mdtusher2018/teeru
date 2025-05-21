@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/add_card.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/congratulations_ticket_punched.dart';
-import 'package:trreu/res/commonWidgets.dart'; // Make sure this has `commonText`
+import 'package:trreu/views/add_card.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/congratulations_ticket_punched.dart';
+import 'package:trreu/views/res/commonWidgets.dart'; // Make sure this has `commonText`
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({super.key});

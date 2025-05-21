@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/home_page.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/home_page.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class TicketScreen extends StatelessWidget {
   const TicketScreen({super.key});

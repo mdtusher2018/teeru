@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/auth/create_new_password_page.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/auth/create_new_password_page.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class PasswordChangedSuccessfullyScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();

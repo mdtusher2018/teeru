@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/auth/login_page.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/profile/contact_page.dart';
-import 'package:trreu/profile/edit_profile.dart';
-import 'package:trreu/profile/my_ticket.dart';
-import 'package:trreu/profile/payment_methods.dart';
-import 'package:trreu/profile/redeem.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/auth/login_page.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/profile/contact_page.dart';
+import 'package:trreu/views/profile/edit_profile.dart';
+import 'package:trreu/views/profile/my_ticket.dart';
+import 'package:trreu/views/profile/payment_methods.dart';
+import 'package:trreu/views/profile/redeem.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override

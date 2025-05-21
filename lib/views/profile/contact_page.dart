@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class ContactUsScreen extends StatelessWidget {
   @override

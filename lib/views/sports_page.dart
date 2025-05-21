@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
-import 'package:trreu/ticket_details.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
+import 'package:trreu/views/ticket_details.dart';
 
 class SportsPage extends StatelessWidget {
   final List<Map<String, String>> events = [

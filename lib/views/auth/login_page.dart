@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/auth/forget_password.dart';
-import 'package:trreu/auth/signup_page.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
-import 'package:trreu/root_page.dart';
+import 'package:trreu/views/auth/forget_password.dart';
+import 'package:trreu/views/auth/signup_page.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
+import 'package:trreu/views/root_page.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});

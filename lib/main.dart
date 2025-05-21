@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/splash_page.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/splash_page.dart';
 
 void main() {
   runApp(const MyApp());

@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class SearchPage extends StatelessWidget {
-   SearchPage({super.key});
+  SearchPage({super.key});
 
   TextEditingController searchController = TextEditingController();
 

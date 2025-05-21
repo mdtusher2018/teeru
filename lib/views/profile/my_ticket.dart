@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/profile/view_ticket.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/profile/view_ticket.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class MyTicketsScreen extends StatelessWidget {
   MyTicketsScreen({Key? key}) : super(key: key);

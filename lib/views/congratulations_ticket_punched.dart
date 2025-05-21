@@ -1,15 +1,19 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
-class ViewTicketScreen extends StatelessWidget {
-  const ViewTicketScreen({super.key});
+class CongratulationTicketPunchedScreen extends StatelessWidget {
+  CongratulationTicketPunchedScreen({super.key});
+
+  TextEditingController commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar("View Tickets"),
+      appBar: commonAppBar("Congratulation!", haveBackButton: false),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: SingleChildScrollView(
@@ -17,9 +21,47 @@ class ViewTicketScreen extends StatelessWidget {
             children: [
               _buildTicketCard(context),
               const SizedBox(height: 30),
-              Image.asset(
-                'assets/images/full_logo.png', // Make sure this matches your asset path
+
+              Center(
+                child: Column(
+                  children: [
+                    commonText(
+                      'Rate Us',
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        5,
+                        (index) => const Icon(Icons.star_border, size: 24),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: commonText(
+                        'Tell us about your experience—we’d love to hear from you!',
+                        textAlign: TextAlign.center,
+                        size: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                      child: commonTextfield(
+                        hintText: 'Type here',
+                        commentController,
+                        hintcolor: AppColors.white,
+                        color: AppColors.buttonColor,
+                        maxLine: 4,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
               SizedBox(height: 30),
             ],
           ),

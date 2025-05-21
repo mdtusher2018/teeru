@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class EditProfileScreen extends StatelessWidget {
-   EditProfileScreen({super.key});
+  EditProfileScreen({super.key});
 
   final TextEditingController _fullNameController = TextEditingController();
 

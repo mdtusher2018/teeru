@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/auth/login_page.dart';
-import 'package:trreu/auth/signup_splash.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart'; // Import your AppColors file for styling
+import 'package:trreu/views/auth/login_page.dart';
+import 'package:trreu/views/auth/signup_splash.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart'; // Import your AppColors file for styling
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

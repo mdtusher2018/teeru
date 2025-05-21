@@ -1,11 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/res/commonWidgets.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
 
 class RedeemCodeScreen extends StatelessWidget {
-   RedeemCodeScreen({super.key});
+  RedeemCodeScreen({super.key});
 
   TextEditingController redeemController = TextEditingController();
 

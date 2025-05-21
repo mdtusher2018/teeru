@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
-import 'package:trreu/colors.dart';
-import 'package:trreu/profile/contact_page.dart';
-import 'package:trreu/res/commonWidgets.dart';
-import 'package:trreu/search_page.dart';
-import 'package:trreu/sports_page.dart';
-import 'package:trreu/ticket_details.dart';
+import 'package:trreu/views/colors.dart';
+import 'package:trreu/views/profile/contact_page.dart';
+import 'package:trreu/views/res/commonWidgets.dart';
+import 'package:trreu/views/search_page.dart';
+import 'package:trreu/views/sports_page.dart';
+import 'package:trreu/views/ticket_details.dart';
 
 class HomePage extends StatelessWidget {
   final TextEditingController searchController = TextEditingController();

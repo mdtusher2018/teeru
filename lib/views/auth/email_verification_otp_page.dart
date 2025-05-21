@@ -2,17 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/controllers/otp_verification_controller.dart';
-import 'package:trreu/views/auth/forget_password.dart';
+import 'package:trreu/controllers/email_verified_otp_controller.dart';
+import 'package:trreu/views/auth/signup_page.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
-class OTPScreen extends StatelessWidget {
-  OTPScreen({super.key});
+class EmailVerifiedOTPScreen extends StatelessWidget {
+  EmailVerifiedOTPScreen({super.key});
 
   var controllers = List.generate(6, (index) => TextEditingController());
-  final OtpVerificationController otpController = Get.put(
-    OtpVerificationController(),
+  final EmailVerifiedOtpController controller = Get.put(
+    EmailVerifiedOtpController(),
   );
 
   @override
@@ -50,21 +50,17 @@ class OTPScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
+
             commonButton(
-              "Verify",
-              onTap: () async {
-                // Combine OTP from 6 controllers
-                String otp = controllers.map((c) => c.text).join();
-
-                // Set to controller's otpController.text
-                otpController.otpController.text = otp;
-
-                // Call verifyOtp method
-                await otpController.verifyOtp();
-              },
+              controller.isLoading.value ? "Verifying..." : "Verify",
+              onTap:
+                  controller.isLoading.value
+                      ? null
+                      : () async {
+                        await controller.verifyOtp();
+                      },
             ),
             SizedBox(height: 16),
-
             SizedBox(
               width: MediaQuery.sizeOf(context).width * 0.8,
               child: Row(
@@ -75,7 +71,7 @@ class OTPScreen extends StatelessWidget {
                       commonText("Didn’t get the code?  ", isBold: true),
                       GestureDetector(
                         onTap: () {
-                          Get.to(ForgetPasswordScreen());
+                          Get.to(SignUpScreen());
                         },
                         child: commonText(
                           "Resend",

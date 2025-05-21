@@ -2,23 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/views/auth/login_page.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
+import 'package:trreu/controllers/reset_password_controller.dart';
 
-class CreateNewPasswordScreen extends StatefulWidget {
-  const CreateNewPasswordScreen({super.key});
+class CreateNewPasswordScreen extends StatelessWidget {
+  CreateNewPasswordScreen({Key? key}) : super(key: key);
 
-  @override
-  State<CreateNewPasswordScreen> createState() =>
-      _CreateNewPasswordScreenState();
-}
-
-class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
-  TextEditingController newPasswordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-
-  bool isNewPasswordVisible = false;
-  bool isConfirmPasswordVisible = false;
+  // Inject controller
+  final ResetPasswordController controller = Get.put(ResetPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,88 +25,77 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
               Image.asset('assets/images/full_logo.png'),
               const SizedBox(height: 8),
 
-              // Teeru Title and Subtitle
+              // Title and rules
               const SizedBox(height: 2),
-
-              // Title
-
-              // Password Rules
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  commonText("Create a New Password", size: 16, isBold: true),
-                  PasswordRichText(
-                    normalText: "At least ",
-                    boldText: "11 characters",
-                  ),
-                  PasswordRichText(
-                    normalText: "At least ",
-                    boldText: "one number",
-                  ),
-                  PasswordRichText(
-                    normalText: "At least ",
-                    boldText: "one symbol",
-                    tailText: " (e.g., ! @ # \$)",
-                  ),
-                  PasswordRichText(
-                    boldText: "Uppercase & lowercase",
-                    tailText: " letters",
-                  ),
-                ],
+              commonText("Create a New Password", size: 16, isBold: true),
+              PasswordRichText(
+                normalText: "At least ",
+                boldText: "11 characters",
               ),
-
+              PasswordRichText(normalText: "At least ", boldText: "one number"),
+              PasswordRichText(
+                normalText: "At least ",
+                boldText: "one symbol",
+                tailText: " (e.g., ! @ # \$)",
+              ),
+              PasswordRichText(
+                boldText: "Uppercase & lowercase",
+                tailText: " letters",
+              ),
               const SizedBox(height: 20),
 
               // New Password Field
-              commonTextfield(
-                newPasswordController,
-                hintText: "New Password",
-                issuffixIconVisible: true,
-                isPasswordVisible: isNewPasswordVisible,
-                changePasswordVisibility: () {
-                  isNewPasswordVisible = !isNewPasswordVisible;
-                  setState(() {});
-                },
+              Obx(
+                () => commonTextfield(
+                  controller.newPasswordController,
+                  hintText: "New Password",
+                  issuffixIconVisible: true,
+                  isPasswordVisible:
+                      controller.isLoading.value
+                          ? false
+                          : controller.isPasswordVisible.value,
+                  changePasswordVisibility: () {
+                    controller.isPasswordVisible.value =
+                        !controller.isPasswordVisible.value;
+                  },
+                ),
               ),
               const SizedBox(height: 12),
 
               // Confirm Password Field
-              commonTextfield(
-                confirmPasswordController,
-                hintText: "Confirm Password",
-                issuffixIconVisible: true,
-                isPasswordVisible: isConfirmPasswordVisible,
-                changePasswordVisibility: () {
-                  isConfirmPasswordVisible = !isConfirmPasswordVisible;
-                  setState(() {});
-                },
+              Obx(
+                () => commonTextfield(
+                  controller.confirmPasswordController,
+                  hintText: "Confirm Password",
+                  issuffixIconVisible: true,
+                  isPasswordVisible:
+                      controller.isLoading.value
+                          ? false
+                          : controller.isConfirmPasswordVisible.value,
+                  changePasswordVisibility: () {
+                    controller.isConfirmPasswordVisible.value =
+                        !controller.isConfirmPasswordVisible.value;
+                  },
+                ),
               ),
               const SizedBox(height: 24),
 
               // Save Password Button
-              commonButton(
-                "Save Password",
-                onTap: () {
-                  Get.to(LoginScreen());
-                },
+              Obx(
+                () => commonButton(
+                  controller.isLoading.value ? "Saving..." : "Save Password",
+                  onTap:
+                      controller.isLoading.value
+                          ? null
+                          : () {
+                            controller.resetPassword();
+                          },
+                ),
               ),
               const SizedBox(height: 16),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget passwordRule(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          commonText("• ", size: 14, isBold: true),
-          Expanded(child: commonText(text, size: 14, isBold: true)),
-        ],
       ),
     );
   }

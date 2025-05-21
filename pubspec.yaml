@@ -38,6 +38,8 @@ dependencies:
   google_fonts: ^6.2.1
   barcode_widget: ^2.0.4
   marquee: ^2.3.0
+  http: ^1.4.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

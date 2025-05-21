@@ -1,213 +1,168 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trreu/controllers/signup_controller.dart';
 import 'package:trreu/views/auth/login_page.dart';
-import 'package:trreu/views/auth/signup_splash.dart';
 import 'package:trreu/views/colors.dart';
-import 'package:trreu/views/res/commonWidgets.dart'; // Import your AppColors file for styling
+import 'package:trreu/views/res/commonWidgets.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({Key? key}) : super(key: key);
 
-  @override
-  _SignUpScreenState createState() => _SignUpScreenState();
-}
+  final SignUpController controller = Get.put(SignUpController());
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController _fullNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-
-  bool _isPasswordVisible = false;
-  bool _isConfirmPasswordVisible = false;
-
-  String _selectedGender = 'Male'; // Default Gender
-
-  void _togglePasswordVisibility() {
-    setState(() {
-      _isPasswordVisible = !_isPasswordVisible;
+  Widget _genderButton(String gender) {
+    return Obx(() {
+      bool isSelected = controller.selectedGender.value == gender;
+      return Expanded(
+        child: GestureDetector(
+          onTap: () => controller.setGender(gender),
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+              color: isSelected ? AppColors.buttonColor : AppColors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.buttonColor, width: 1),
+            ),
+            child: Center(
+              child: commonText(
+                gender,
+                color: isSelected ? Colors.white : Colors.black,
+                size: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      );
     });
-  }
-
-  void _toggleConfirmPasswordVisibility() {
-    setState(() {
-      _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-    });
-  }
-
-  void _signUp() {
-    Get.to(SignUpSplashScreen());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Center(child: commonText("Sign Up", size: 21, isBold: true)),
-              SizedBox(height: 10),
-              // Title Text
+              const SizedBox(height: 10),
               commonText(
                 'Let\'s get started',
-                size: 14.0,
+                size: 14,
                 isBold: true,
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(height: 24),
 
-              SizedBox(height: 24),
-
-              // Full Name TextField
               commonTextfield(
-                _fullNameController,
+                controller.fullNameController,
                 hintText: 'Enter Full Name',
-                textSize: 14.0,
-                prefixIcon: Icon(Icons.person_2_outlined),
-                isPasswordVisible: false,
+                textSize: 14,
+                prefixIcon: const Icon(Icons.person_2_outlined),
                 enable: true,
-              ),
-              SizedBox(height: 24),
 
-              // Email TextField
+                // Optionally add error binding here
+              ),
+              const SizedBox(height: 24),
+
               commonTextfield(
-                _emailController,
+                controller.emailController,
                 hintText: 'Enter Email Address',
-                prefixIcon: Icon(Icons.email_outlined),
-                textSize: 14.0,
-                isPasswordVisible: false,
+                prefixIcon: const Icon(Icons.email_outlined),
+                textSize: 14,
                 enable: true,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-              // Phone Number TextField
               commonTextfield(
-                _phoneNumberController,
+                controller.phoneNumberController,
                 hintText: 'Enter Phone Number',
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.only(top: 12.0, left: 8),
+                  padding: const EdgeInsets.only(top: 12, left: 8),
                   child: commonText("+221", size: 16),
                 ),
-                textSize: 14.0,
-
-                isPasswordVisible: false,
+                textSize: 14,
                 enable: true,
                 keyboardType: TextInputType.phone,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-              // Password TextField
-              commonTextfield(
-                _passwordController,
-                hintText: 'Create Password',
-                textSize: 14.0,
-                isPasswordVisible: _isPasswordVisible,
-                enable: true,
-                issuffixIconVisible: true,
-                changePasswordVisibility: _togglePasswordVisibility,
+              Obx(
+                () => commonTextfield(
+                  controller.passwordController,
+                  hintText: 'Create Password',
+                  textSize: 14,
+                  isPasswordVisible: controller.isPasswordVisible.value,
+                  issuffixIconVisible: true,
+                  changePasswordVisibility: () {
+                    controller.isPasswordVisible.value =
+                        !controller.isPasswordVisible.value;
+                  },
+                  enable: true,
+                ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-              // Confirm Password TextField
-              commonTextfield(
-                _confirmPasswordController,
-                hintText: 'Confirm Password',
-                textSize: 14.0,
-                isPasswordVisible: _isConfirmPasswordVisible,
-                enable: true,
-                issuffixIconVisible: true,
-                changePasswordVisibility: _toggleConfirmPasswordVisibility,
+              Obx(
+                () => commonTextfield(
+                  controller.confirmPasswordController,
+                  hintText: 'Confirm Password',
+                  textSize: 14,
+                  isPasswordVisible: controller.isConfirmPasswordVisible.value,
+                  issuffixIconVisible: true,
+                  changePasswordVisibility: () {
+                    controller.isConfirmPasswordVisible.value =
+                        !controller.isConfirmPasswordVisible.value;
+                  },
+                  enable: true,
+                ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-              // Gender Selection (Radio buttons)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Male button
                   _genderButton('Male'),
-                  SizedBox(width: 50),
-                  // Female button
+                  const SizedBox(width: 50),
                   _genderButton('Female'),
                 ],
               ),
 
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-              // Sign Up Button
-
-              // Terms and Conditions Text
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: "By creating a Teeru’s account, you agree to our ",
-
-                  style: TextStyle(color: Colors.black, fontSize: 14.0),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "Terms of Services",
-                      style: TextStyle(color: AppColors.primaryColor),
-                      recognizer:
-                          TapGestureRecognizer()
-                            ..onTap = () {
-                              // Handle the Terms of Services link tap
-                              print("Terms of Services tapped");
-                            },
-                    ),
-                    TextSpan(
-                      text: " and ",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    TextSpan(
-                      text: "Privacy Policy",
-                      style: TextStyle(color: AppColors.primaryColor),
-                      recognizer:
-                          TapGestureRecognizer()
-                            ..onTap = () {
-                              // Handle the Privacy Policy link tap
-                              print("Privacy Policy tapped");
-                            },
-                    ),
-                    TextSpan(text: ". Dalal Ak Jàmm!"),
-                  ],
+              Obx(
+                () => commonButton(
+                  controller.isLoading.value ? 'Creating...' : 'Create Account',
+                  onTap:
+                      controller.isLoading.value
+                          ? null
+                          : () => controller.signUp(),
+                  textSize: 18,
+                  color: AppColors.buttonColor,
+                  textColor: Colors.white,
                 ),
               ),
 
-              SizedBox(height: 24),
-              commonButton(
-                'Create Account',
+              const SizedBox(height: 24),
 
-                onTap: _signUp,
-                textSize: 18.0,
-                color: AppColors.buttonColor,
-                textColor: Colors.white,
-              ),
-
-              SizedBox(height: 24),
-              // Login link
               Row(
                 children: [
-                  commonText('Already have a Teeru account? ', size: 14.0),
+                  commonText('Already have a Teeru account? ', size: 14),
                   GestureDetector(
-                    onTap: () {
-                      Get.to(LoginScreen());
-                    },
+                    onTap: () => Get.to(() => LoginScreen()),
                     child: commonText(
                       'Log In',
                       isBold: true,
-                      size: 14.0,
+                      size: 14,
                       color: AppColors.primaryColor,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   commonText(
-                    "Cancel",
+                    'Cancel',
                     size: 14,
                     color: AppColors.primaryColor,
                     isBold: true,
@@ -215,38 +170,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _genderButton(String gender) {
-    bool isSelected = _selectedGender == gender;
-
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _selectedGender = gender;
-          });
-        },
-        child: Container(
-          height: 50,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: isSelected ? AppColors.buttonColor : AppColors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(color: AppColors.buttonColor, width: 1),
-          ),
-          child: Center(
-            child: commonText(
-              gender,
-
-              color: isSelected ? Colors.white : Colors.black,
-              size: 16,
-              fontWeight: FontWeight.bold,
-            ),
           ),
         ),
       ),

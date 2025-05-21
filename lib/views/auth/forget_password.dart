@@ -1,14 +1,16 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/views/auth/otp_page.dart';
+import 'package:trreu/controllers/forgot_password_controller.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
-  TextEditingController emailController = TextEditingController();
+  ForgetPasswordScreen({Key? key}) : super(key: key);
 
-  ForgetPasswordScreen({super.key});
+  // Use GetX controller
+  final ForgotPasswordController controller = Get.put(
+    ForgotPasswordController(),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,18 +33,28 @@ class ForgetPasswordScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
+
+                // Use controller's emailController
                 commonTextfield(
+                  controller.emailController,
                   hintText: "Enter Email or Phone Number",
-                  emailController,
                 ),
+
                 const SizedBox(height: 20),
-                commonButton(
-                  "Generate OTP",
-                  height: 40,
-                  onTap: () {
-                    Get.to(OTPScreen());
-                  },
+
+                Obx(
+                  () => commonButton(
+                    controller.isLoading.value ? "Sending..." : "Generate OTP",
+                    height: 40,
+                    onTap:
+                        controller.isLoading.value
+                            ? null
+                            : () async {
+                              await controller.sendOtp();
+                            },
+                  ),
                 ),
+
                 const SizedBox(height: 12),
                 InkWell(
                   onTap: () {
@@ -60,6 +72,4 @@ class ForgetPasswordScreen extends StatelessWidget {
       ),
     );
   }
-
-  // Function to open the email client with the given email
 }

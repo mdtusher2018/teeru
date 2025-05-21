@@ -1,27 +1,17 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trreu/controllers/login_controller.dart';
 import 'package:trreu/views/auth/forget_password.dart';
 import 'package:trreu/views/auth/signup_page.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 import 'package:trreu/views/root_page.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({Key? key}) : super(key: key);
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController = TextEditingController();
-
-  TextEditingController passwordController = TextEditingController();
-
-  bool isPasswordVisible = false;
-  bool rememberMe = false;
+  // Initialize the controller (GetX)
+  final LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const CircleAvatar(
                       radius: 10,
-                      backgroundImage: AssetImage(
-                        'assets/images/france.png',
-                      ), // French flag icon
+                      backgroundImage: AssetImage('assets/images/france.png'),
                     ),
                   ],
                 ),
@@ -66,45 +54,46 @@ class _LoginScreenState extends State<LoginScreen> {
                 commonText("Log In", size: 18, fontWeight: FontWeight.bold),
                 const SizedBox(height: 16),
 
-                // Email / Phone
+                // Email / Phone TextField
                 commonTextfield(
                   hintText: "Enter Email or Phone Number",
-                  emailController,
+                  loginController.emailController,
                 ),
+
                 const SizedBox(height: 12),
 
-                // Password
-                commonTextfield(
-                  passwordController,
-
-                  hintText: "Password",
-                  issuffixIconVisible: true,
-                  isPasswordVisible: isPasswordVisible,
-                  changePasswordVisibility: () {
-                    isPasswordVisible = !isPasswordVisible;
-                    setState(() {});
-                  },
-                ),
+                // Password TextField with visibility toggle
+                Obx(() {
+                  return commonTextfield(
+                    loginController.passwordController,
+                    hintText: "Password",
+                    issuffixIconVisible: true,
+                    isPasswordVisible: loginController.isPasswordVisible.value,
+                    changePasswordVisibility:
+                        loginController.togglePasswordVisibility,
+                  );
+                }),
 
                 // Remember me & Forgot password
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: rememberMe,
-                          onChanged: (val) {
-                            rememberMe = !rememberMe;
-                            setState(() {});
-                          },
-                        ),
-                        commonText("Keep me logged in", size: 14),
-                      ],
+                    Obx(
+                      () => Row(
+                        children: [
+                          Checkbox(
+                            value: loginController.rememberMe.value,
+                            onChanged: (val) {
+                              loginController.rememberMe.value = val ?? false;
+                            },
+                          ),
+                          commonText("Keep me logged in", size: 14),
+                        ],
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(ForgetPasswordScreen());
+                        Get.to(() => ForgetPasswordScreen());
                       },
                       child: commonText(
                         "Forgot password?",
@@ -118,13 +107,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 16),
 
                 // Log In Button
-                commonButton(
-                  "Log In",
-                  onTap: () {
-                    Get.to(RootPage());
-                  },
+                Obx(
+                  () => commonButton(
+                    loginController.isLoading.value
+                        ? 'Logging in...'
+                        : "Log In",
+                    onTap:
+                        loginController.isLoading.value
+                            ? null
+                            : () {
+                              loginController.login();
+                            },
+                  ),
                 ),
-
                 const SizedBox(height: 16),
 
                 // Sign Up / Guest
@@ -136,21 +131,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         commonText("New to Teeru? "),
                         GestureDetector(
                           onTap: () {
-                            Get.to(SignUpScreen());
+                            Get.to(() => SignUpScreen());
                           },
                           child: commonText(
                             "Let’s get started",
-
                             fontWeight: FontWeight.bold,
                             color: AppColors.primaryColor,
                           ),
                         ),
                       ],
                     ),
-
                     GestureDetector(
                       onTap: () {
-                        Get.to(RootPage());
+                        Get.to(() => RootPage());
                       },
                       child: commonText(
                         "Continue as guest",

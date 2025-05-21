@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trreu/views/colors.dart';
 
@@ -260,5 +261,29 @@ AppBar commonAppBar(
     backgroundColor: color,
     title: commonText(title, size: 18, isBold: true, color: textcolor),
     leading: (haveBackButton) ? BackButton() : null,
+  );
+}
+
+void commonSnackbar({
+  required String title,
+  required String message,
+  SnackPosition position = SnackPosition.BOTTOM,
+  Color backgroundColor = Colors.black87,
+  Color textColor = Colors.white,
+  Duration duration = const Duration(seconds: 3),
+  double margin = 12.0,
+  double borderRadius = 8.0,
+  SnackStyle snackStyle = SnackStyle.FLOATING,
+}) {
+  Get.snackbar(
+    title,
+    message,
+    snackPosition: position,
+    backgroundColor: backgroundColor,
+    colorText: textColor,
+    duration: duration,
+    margin: EdgeInsets.all(margin),
+    borderRadius: borderRadius,
+    snackStyle: snackStyle,
   );
 }

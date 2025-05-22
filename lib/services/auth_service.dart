@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:trreu/models/forgot_password_otp_match_model.dart';
 import 'package:trreu/models/forgot_password_otp_model.dart';
 import 'package:trreu/models/password_reset_model.dart';
@@ -77,7 +79,11 @@ class AuthService {
   Future<SignupEmailVerifiedResponse> signupEmailVerified(
     Map<String, dynamic> userData,
   ) async {
-    final response = await _apiService.post(ApiEndpoints.createUser, userData);
+    log(userData.toString());
+    final response = await _apiService.post(
+      ApiEndpoints.createUserVerifyOtp,
+      userData,
+    );
     return SignupEmailVerifiedResponse.fromJson(response);
   }
 }

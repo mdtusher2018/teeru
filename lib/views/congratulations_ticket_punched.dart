@@ -2,13 +2,14 @@
 
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:trreu/controllers/review_controller.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
 class CongratulationTicketPunchedScreen extends StatelessWidget {
   CongratulationTicketPunchedScreen({super.key});
-
-  TextEditingController commentController = TextEditingController();
+  final ReviewController reviewController = Get.put(ReviewController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +32,27 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                     const SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        5,
-                        (index) => const Icon(Icons.star_border, size: 24),
-                      ),
-                    ),
+                    Obx(() {
+                      // Update stars based on rating.value
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          5,
+                          (index) => InkWell(
+                            onTap: () {
+                              reviewController.rating.value = index + 1.0;
+                            },
+                            child: Icon(
+                              index < reviewController.rating.value
+                                  ? Icons.star
+                                  : Icons.star_border,
+
+                              size: 24,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
                     const SizedBox(height: 12),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -52,13 +67,25 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: commonTextfield(
                         hintText: 'Type here',
-                        commentController,
+                        reviewController.commentController,
                         hintcolor: AppColors.white,
                         color: AppColors.buttonColor,
                         maxLine: 4,
                       ),
                     ),
                   ],
+                ),
+              ),
+              SizedBox(height: 16),
+              Obx(
+                () => commonButton(
+                  reviewController.isLoading.value ? "Submitting..." : "Submit",
+                  onTap:
+                      reviewController.isLoading.value
+                          ? null
+                          : () {
+                            reviewController.submitReview();
+                          },
                 ),
               ),
 

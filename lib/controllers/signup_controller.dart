@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/services/auth_service.dart';
+import 'package:trreu/services/local_storage_service.dart';
 import 'package:trreu/views/auth/email_verification_otp_page.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
@@ -12,6 +13,7 @@ class SignUpController extends GetxController {
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final LocalStorageService _localStorageService = LocalStorageService();
 
   var selectedGender = 'Male'.obs;
 
@@ -97,13 +99,14 @@ class SignUpController extends GetxController {
       );
 
       if (response.success) {
+        // Save token
+        await _localStorageService.saveToken(response.data.createUserToken);
+
         commonSnackbar(
           title: 'Success',
           message: response.message,
           backgroundColor: Colors.green,
         );
-
-        // Navigate to Signup splash or next page
 
         Get.to(() => EmailVerifiedOTPScreen());
       } else {

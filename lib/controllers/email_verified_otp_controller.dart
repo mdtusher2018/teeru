@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/services/auth_service.dart';
@@ -8,7 +10,7 @@ class EmailVerifiedOtpController extends GetxController {
   final AuthService _authService = AuthService();
 
   final List<TextEditingController> otpControllers = List.generate(
-    4,
+    6,
     (_) => TextEditingController(),
   );
 
@@ -17,10 +19,10 @@ class EmailVerifiedOtpController extends GetxController {
   String get otp => otpControllers.map((c) => c.text.trim()).join();
 
   bool _validate() {
-    if (otp.length < 4) {
+    if (otp.length < 6) {
       commonSnackbar(
         title: 'Validation Error',
-        message: 'Please enter complete 4-digit OTP',
+        message: 'Please enter complete 6-digit OTP',
         backgroundColor: Colors.red,
       );
       return false;
@@ -34,12 +36,9 @@ class EmailVerifiedOtpController extends GetxController {
     try {
       isLoading.value = true;
 
-      // Here you need user data to call API,
-      // assume it's passed or saved somewhere; replace with actual data
-      Map<String, dynamic> userData = {
-        'otp': otp,
-        // add any other required fields if needed
-      };
+      log(otp);
+
+      Map<String, dynamic> userData = {'otp': otp};
 
       final response = await _authService.signupEmailVerified(userData);
 

@@ -1,0 +1,121 @@
+class Event {
+  final String id;
+  final String name;
+  final Category category;
+  final DateTime date;
+  final String time;
+  final String location;
+  final TicketPrices ticketPrices;
+  final bool isDeleted;
+  final String createdAt;
+  final String updatedAt;
+
+  Event({
+    required this.id,
+    required this.name,
+    required this.category,
+    required this.date,
+    required this.time,
+    required this.location,
+    required this.ticketPrices,
+    required this.isDeleted,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory Event.fromJson(Map<String, dynamic> json) {
+    return Event(
+      id: json['_id'] ?? '',
+      name: json['name'] ?? '',
+      category: Category.fromJson(json['category']),
+      date: DateTime.parse(json['date']),
+      time: json['time'] ?? '',
+      location: json['location'] ?? '',
+      ticketPrices: TicketPrices.fromJson(json['ticketPrices']),
+      isDeleted: json['isDeleted'] ?? false,
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
+    );
+  }
+}
+
+class Category {
+  final String id;
+  final String name;
+  final String image;
+  final bool isDeleted;
+  final String createdAt;
+  final String updatedAt;
+
+  Category({
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.isDeleted,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+      id: json['_id'] ?? '',
+      name: json['name'] ?? '',
+      image: json['image'] ?? '',
+      isDeleted: json['isDeleted'] ?? false,
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
+    );
+  }
+}
+
+class TicketPrices {
+  final double tribune;
+  final double annexeLoge;
+  final double logeVIP;
+  final double logeVVIP;
+  final double serviceFee;
+  final double processingFee;
+
+  TicketPrices({
+    required this.tribune,
+    required this.annexeLoge,
+    required this.logeVIP,
+    required this.logeVVIP,
+    required this.serviceFee,
+    required this.processingFee,
+  });
+
+  factory TicketPrices.fromJson(Map<String, dynamic> json) {
+    return TicketPrices(
+      tribune: (json['tribune']?.toDouble()) ?? 0.0,
+      annexeLoge: (json['annexeLoge']?.toDouble()) ?? 0.0,
+      logeVIP: (json['logeVIP']?.toDouble()) ?? 0.0,
+      logeVVIP: (json['logeVVIP']?.toDouble()) ?? 0.0,
+      serviceFee: (json['serviceFee']?.toDouble()) ?? 0.0,
+      processingFee: (json['processingFee']?.toDouble()) ?? 0.0,
+    );
+  }
+}
+
+class PaginationMeta {
+  final int page;
+  final int limit;
+  final int total;
+  final int totalPage;
+
+  PaginationMeta({
+    required this.page,
+    required this.limit,
+    required this.total,
+    required this.totalPage,
+  });
+
+  factory PaginationMeta.fromJson(Map<String, dynamic> json) {
+    return PaginationMeta(
+      page: json['page'] ?? 0,
+      limit: json['limit'] ?? 0,
+      total: json['total'] ?? 0,
+      totalPage: json['totalPage'] ?? 0,
+    );
+  }
+}

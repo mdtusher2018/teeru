@@ -1,5 +1,6 @@
 class ApiEndpoints {
   static const String baseUrl = 'http://147.93.29.184:4010/api/v1/';
+  static const String baseImageUrl = 'http://147.93.29.184:4010';
 
   // Users
   static const String createUser = 'users/create';
@@ -23,4 +24,14 @@ class ApiEndpoints {
 
   // Settings
   static const String contactUs = 'settings/contactUs';
+
+  // Event endpoints
+  static const String category = 'category';
+  static const String specificCategoryEvent = 'event/speceficCategoryEvent/';
+  static const String eventById = 'event/'; // Append event id dynamically
+  static const String upcomingEvents = 'event/upcoming';
+
+  // Ticket endpoints
+  static const String myTickets = 'ticket/myTickets';
+  static const String buyTicket = 'ticket/buy';
 }

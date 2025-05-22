@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
+import 'package:trreu/controllers/home_controller.dart';
+import 'package:trreu/models/common_model.dart';
+import 'package:trreu/utils/app_constants.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/profile/contact_page.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
@@ -9,10 +14,8 @@ import 'package:trreu/views/sports_page.dart';
 import 'package:trreu/views/ticket_details.dart';
 
 class HomePage extends StatelessWidget {
-  final TextEditingController searchController = TextEditingController();
-
   HomePage({super.key});
-
+  final HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +58,7 @@ class HomePage extends StatelessWidget {
                   child: commonTextfield(
                     hintText: "Teams, Artists, Concerts on Teeru",
                     enable: false,
-                    searchController,
+                    TextEditingController(),
                   ),
                 ),
               ),
@@ -73,34 +76,43 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              // Categories
+              // Categories Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SizedBox(
                   height: 140,
-
-                  child: ListView.builder(
-                    itemCount: 4,
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: InkWell(
-                          onTap: () {
-                            Get.to(SportsPage());
-                          },
-                          child: categoryCard(
-                            'Football',
-                            'https://upload.wikimedia.org/wikipedia/commons/8/8d/Lutte_s%C3%A9n%C3%A9galaise_Bercy_2013_-_Mame_Balla-Pape_Mor_L%C3%B4_-_32.jpg',
+                  child: Obx(() {
+                    if (controller.isLoadingCategories.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return ListView.builder(
+                      itemCount: controller.categories.length,
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      itemBuilder: (context, index) {
+                        final category = controller.categories[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: InkWell(
+                            onTap: () {
+                              Get.to(
+                                SportsPage(
+                                  categoryId: category.id,
+                                  categoryName: category.name,
+                                ),
+                              );
+                            },
+                            child: categoryCard(
+                              category.name,
+                              getFullImageUrl(category.image),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                    );
+                  }),
                 ),
               ),
-
               const SizedBox(height: 16),
 
               // Infinite Scroll Banner
@@ -136,24 +148,49 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              ListView.separated(
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: 16);
-                },
-                itemCount: 4,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: upcomingCard(),
-                  );
-                },
-              ),
+
+              // ListView.separated(
+              //   separatorBuilder: (context, index) {
+              //     return SizedBox(height: 16);
+              //   },
+              //   itemCount: 4,
+              //   shrinkWrap: true,
+              //   physics: NeverScrollableScrollPhysics(),
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   itemBuilder: (context, index) {
+              //     return Padding(
+              //       padding: const EdgeInsets.symmetric(
+              //         horizontal: 16,
+              //         vertical: 8,
+              //       ),
+              //       child: upcomingCard(),
+              //     );
+              //   },
+              // ),
+              Obx(() {
+                log(
+                  "........................${controller.upcomingEvents.length}",
+                );
+                return ListView.separated(
+                  separatorBuilder:
+                      (context, index) => const SizedBox(height: 16),
+                  itemCount: controller.upcomingEvents.length, // dynamic count
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemBuilder: (context, index) {
+                    final event =
+                        controller.upcomingEvents[index]; // get event at index
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      child: upcomingCard(event), // pass event data to widget
+                    );
+                  },
+                );
+              }),
             ],
           ),
         ),
@@ -186,18 +223,19 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget upcomingCard() {
+  Widget upcomingCard(Event event) {
     return InkWell(
       onTap: () {
-        Get.to(TicketDetailsScreen());
+        Get.to(() => TicketDetailsScreen()); // pass event id if needed
       },
       child: Container(
         height: 260,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          image: const DecorationImage(
+          image: DecorationImage(
             image: NetworkImage(
-              "https://c7.alamy.com/comp/BX8G0R/the-italy-u-20-national-team-lines-up-prior-to-the-start-of-a-fifa-BX8G0R.jpg",
+              getFullImageUrl(event.category.image),
+              // "https://c7.alamy.com/comp/BX8G0R/he-italy-u-20-national-team-lines-up-prior-to-the-start-of-a-fifa-BX8G0R.jpg",
             ),
             fit: BoxFit.cover,
           ),
@@ -222,7 +260,7 @@ class HomePage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     commonText(
-                      "Men’s Football",
+                      event.name,
                       size: 16,
                       isBold: true,
                       color: AppColors.white,
@@ -236,11 +274,8 @@ class HomePage extends StatelessWidget {
                             size: 16,
                             color: AppColors.white,
                           ),
-                          SizedBox(width: 4),
-                          commonText(
-                            "Diamniadio Olympic Stadium",
-                            color: AppColors.white,
-                          ),
+                          const SizedBox(width: 4),
+                          commonText(event.location, color: AppColors.white),
                         ],
                       ),
                     ),
@@ -253,8 +288,11 @@ class HomePage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    commonText("Senegal vs. Morocco", color: AppColors.white),
-                    commonText("18:45   23 Nov 2024", color: AppColors.white),
+                    commonText("Time: ${event.time}", color: AppColors.white),
+                    commonText(
+                      "Date: ${event.date.toLocal().toString().split(' ')[0]}",
+                      color: AppColors.white,
+                    ),
                   ],
                 ),
               ),

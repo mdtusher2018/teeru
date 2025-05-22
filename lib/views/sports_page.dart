@@ -1,45 +1,23 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trreu/controllers/SportsController.dart';
+import 'package:trreu/models/common_model.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 import 'package:trreu/views/ticket_details.dart';
 
 class SportsPage extends StatelessWidget {
-  final List<Map<String, String>> events = [
-    {
-      'title': 'US Ouakam vs. Jaraff',
-      'date': 'Feb. 1st   14:30',
-      'location': 'Stade Lat Dior',
-    },
-    {
-      'title': 'Dakar Sacré Coeur vs. Oslo FA',
-      'date': 'Feb. 1st   14:30',
-      'location': 'Stade Municipal de Ngor',
-    },
-    {
-      'title': 'Senegal vs. Algérie (M)',
-      'date': 'Feb. 6th   17:00',
-      'location': 'Stade Abdoulaye Wade',
-    },
-    {
-      'title': 'Senegal vs. Bénin (W)',
-      'date': 'Feb. 7th   18:00',
-      'location': 'Stade Abdoulaye Wade',
-    },
-    {
-      'title': 'Guédiawaye FC vs. Wallydaan',
-      'date': 'Feb. 10th   15:00',
-      'location': 'Stade Amadou Barry',
-    },
-    {
-      'title': 'US Gorée vs. ASC La Linguère',
-      'date': 'Feb. 11th   15:30',
-      'location': 'Stade Aline Sitoé Diatta',
-    },
-  ];
+  final String categoryId; // Pass category id here
+  final String categoryName;
+
+  SportsPage({Key? key, required this.categoryId, required this.categoryName})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final SportsController controller = Get.put(SportsController(categoryId));
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -62,7 +40,7 @@ class SportsPage extends StatelessWidget {
                   Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(24.0),
                         child: InkWell(
                           onTap: () {
                             Get.back();
@@ -76,39 +54,41 @@ class SportsPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
-            commonText(
-              "Football Events",
-              size: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
-                  SizedBox(height: 12),
-                  Divider(color: AppColors.black),
-                  ListView.separated(
-                    itemCount: 4,
-                    separatorBuilder: (context, index) {
-                      return Divider(color: AppColors.black);
-                    },
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return EventCard(events[index]);
-                    },
-                  ),
-                  Divider(color: AppColors.black),
-                ],
-              ),
-            ),
+            commonText(categoryName, size: 18, fontWeight: FontWeight.bold),
+            Obx(() {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  children: [
+                    SizedBox(height: 12),
+                    Divider(color: AppColors.black),
+
+                    ListView.separated(
+                      padding: EdgeInsets.all(8),
+                      itemCount: controller.events.length,
+                      separatorBuilder:
+                          (context, index) => Divider(color: AppColors.black),
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final event = controller.events[index];
+                        return EventCard(event);
+                      },
+                    ),
+
+                    Divider(color: AppColors.black),
+                  ],
+                ),
+              );
+            }),
           ],
         ),
       ),
     );
   }
 
-  Widget EventCard(Map<String, String> event) {
+  Widget EventCard(Event event) {
+    log(event.name);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Row(
@@ -142,9 +122,9 @@ class SportsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                commonText(event['title'] ?? '', fontWeight: FontWeight.bold),
+                commonText(event.name, fontWeight: FontWeight.bold),
                 SizedBox(height: 4),
-                commonText(event['date'] ?? '', color: Colors.grey[700]!),
+                commonText(event.date.toString(), color: Colors.grey[700]!),
                 SizedBox(height: 4),
                 Row(
                   children: [
@@ -152,7 +132,7 @@ class SportsPage extends StatelessWidget {
                     SizedBox(width: 4),
                     Expanded(
                       child: commonText(
-                        event['location'] ?? '',
+                        event.location,
                         color: Colors.grey[700]!,
                       ),
                     ),

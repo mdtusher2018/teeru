@@ -11,8 +11,8 @@ class LoginController extends GetxController {
   final AuthService _authService = AuthService();
   final LocalStorageService _localStorageService = LocalStorageService();
 
-  final emailController = TextEditingController(text: "user1@gmail.com");
-  final passwordController = TextEditingController(text: "hello123");
+  final emailController = TextEditingController(text: "user9@gmail.com");
+  final passwordController = TextEditingController(text: "123456");
 
   var isLoading = false.obs;
   var emailError = ''.obs;

@@ -14,17 +14,24 @@ class ApiService {
 
     return {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
+      // 'Authorization': 'Bearer $token',
       'token': '$token',
     };
   }
 
-  Future<dynamic> get(String endpoint) async {
+  Future<dynamic> get(
+    String endpoint, {
+    Map<String, String>? extraHeader,
+  }) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
+
     final headers = await _getHeaders();
 
-    final response = await http.get(url, headers: headers);
-
+    final response = await http.get(
+      url,
+      headers: (extraHeader != null) ? extraHeader : headers,
+    );
+    log(response.body);
     return _processResponse(response);
   }
 
@@ -88,7 +95,6 @@ class ApiService {
     final statusCode = response.statusCode;
     final responseBody =
         response.body.isNotEmpty ? jsonDecode(response.body) : null;
-
     if (statusCode >= 200 && statusCode < 300) {
       return responseBody;
     } else {

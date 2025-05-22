@@ -10,7 +10,6 @@ import 'package:trreu/views/res/commonWidgets.dart';
 class EmailVerifiedOTPScreen extends StatelessWidget {
   EmailVerifiedOTPScreen({super.key});
 
-  var controllers = List.generate(6, (index) => TextEditingController());
   final EmailVerifiedOtpController controller = Get.put(
     EmailVerifiedOtpController(),
   );
@@ -42,10 +41,14 @@ class EmailVerifiedOTPScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                controllers.length,
+                controller.otpControllers.length,
                 (index) => Padding(
                   padding: EdgeInsets.only(right: 4),
-                  child: buildOTPTextField(controllers[index], index, context),
+                  child: buildOTPTextField(
+                    controller.otpControllers[index],
+                    index,
+                    context,
+                  ),
                 ),
               ),
             ),

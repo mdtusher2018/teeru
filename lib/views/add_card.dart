@@ -1,19 +1,13 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:trreu/controllers/AddCardController.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
 class AddCardPage extends StatelessWidget {
   AddCardPage({super.key});
 
-  TextEditingController cardHolderNameController = TextEditingController();
-
-  TextEditingController cardNumberController = TextEditingController();
-
-  TextEditingController expireController = TextEditingController();
-
-  TextEditingController CVVController = TextEditingController();
+  final AddCardController controller = Get.put(AddCardController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +21,6 @@ class AddCardPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 16),
               height: 180,
-
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 image: DecorationImage(
@@ -36,29 +29,41 @@ class AddCardPage extends StatelessWidget {
                 ),
               ),
             ),
-
             SizedBox(height: 16),
             commonTextfield(
-              cardHolderNameController,
+              controller.cardHolderNameController,
               hintText: "Cardholder Name",
             ),
             SizedBox(height: 16),
-
-            commonTextfield(cardNumberController, hintText: "Card Number"),
+            commonTextfield(
+              controller.cardNumberController,
+              hintText: "Card Number",
+            ),
             SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
-                  child: commonTextfield(expireController, hintText: "MM/YY"),
+                  child: commonTextfield(
+                    controller.expireController,
+                    hintText: "MM/YY",
+                  ),
                 ),
-                Spacer(),
+                SizedBox(width: 16),
                 Expanded(
-                  child: commonTextfield(CVVController, hintText: "CVV"),
+                  child: commonTextfield(
+                    controller.cvvController,
+                    hintText: "CVV",
+                  ),
                 ),
               ],
             ),
             SizedBox(height: 16),
-            commonButton("Add Card"),
+            Obx(
+              () =>
+                  controller.isLoading.value
+                      ? CircularProgressIndicator()
+                      : commonButton("Add Card", onTap: controller.addCard),
+            ),
           ],
         ),
       ),

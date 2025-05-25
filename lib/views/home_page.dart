@@ -100,7 +100,10 @@ class HomePage extends StatelessWidget {
                                   categoryId: category.id,
                                   categoryName: category.name,
                                 ),
-                              );
+                              )!.then((value) {
+                                controller.fetchCategories();
+                                controller.fetchUpcomingEvents();
+                              });
                             },
                             child: categoryCard(
                               category.name,
@@ -140,14 +143,15 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: [
-                    commonText("Upcoming Events", size: 16, isBold: true),
-                  ],
+              if (controller.upcomingEvents.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      commonText("Upcoming Events", size: 16, isBold: true),
+                    ],
+                  ),
                 ),
-              ),
 
               // ListView.separated(
               //   separatorBuilder: (context, index) {
@@ -226,7 +230,10 @@ class HomePage extends StatelessWidget {
   Widget upcomingCard(Event event) {
     return InkWell(
       onTap: () {
-        Get.to(() => TicketDetailsScreen()); // pass event id if needed
+        Get.to(() => TicketDetailsScreen(event: event))!.then((value) {
+          controller.fetchCategories();
+          controller.fetchUpcomingEvents();
+        }); // pass event id if needed
       },
       child: Container(
         height: 260,

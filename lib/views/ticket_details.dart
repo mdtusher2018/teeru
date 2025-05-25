@@ -1,43 +1,66 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trreu/models/common_model.dart';
+import 'package:trreu/utils/app_constants.dart';
 import 'package:trreu/views/checkout_page.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
 class TicketDetailsScreen extends StatefulWidget {
-  const TicketDetailsScreen({super.key});
+  final Event event;
+
+  const TicketDetailsScreen({Key? key, required this.event}) : super(key: key);
 
   @override
   State<TicketDetailsScreen> createState() => _TicketDetailsScreenState();
 }
 
 class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
-  Map<String, int> quantities = {
-    'Tribune': 0,
-    'Annexe Loge': 0,
-    'Loge VIP': 0,
-    'Loge VVIP': 0,
-  };
+  late Map<String, int> quantities;
+  late Map<String, int> prices;
 
-  Map<String, int> prices = {
-    'Tribune': 1000,
-    'Annexe Loge': 2000,
-    'Loge VIP': 3000,
-    'Loge VVIP': 25000,
-  };
+  @override
+  void initState() {
+    super.initState();
+    prices = {
+      'Tribune': widget.event.ticketPrices.tribune.toInt(),
+      'Annexe Loge': widget.event.ticketPrices.annexeLoge.toInt(),
+      'Loge VIP': widget.event.ticketPrices.logeVIP.toInt(),
+      'Loge VVIP': widget.event.ticketPrices.logeVVIP.toInt(),
+    };
 
-  int get totalPrice {
+    quantities = {
+      'Tribune': 0,
+      'Annexe Loge': 0,
+      'Loge VIP': 0,
+      'Loge VVIP': 0,
+    };
+  }
+
+  int get subtotal {
     int total = 0;
     quantities.forEach((key, qty) {
-      total += qty * prices[key]!;
+      total += qty * (prices[key] ?? 0);
     });
     return total;
   }
 
+  int get serviceFeeAmount {
+    return ((subtotal * widget.event.ticketPrices.serviceFee) / 100).round();
+  }
+
+  int get processingFeeAmount {
+    return ((subtotal * widget.event.ticketPrices.processingFee) / 100).round();
+  }
+
+  int get totalPrice {
+    return subtotal + serviceFeeAmount + processingFeeAmount;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final event = widget.event;
+
     return Scaffold(
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -53,7 +76,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                 borderRadius: BorderRadius.circular(16),
                 image: DecorationImage(
                   image: NetworkImage(
-                    "https://upload.wikimedia.org/wikipedia/commons/8/8d/Lutte_s%C3%A9n%C3%A9galaise_Bercy_2013_-_Mame_Balla-Pape_Mor_L%C3%B4_-_32.jpg",
+                    // prepend your base url here if needed
+                    getFullImageUrl(event.category.image),
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -75,14 +99,13 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                   ),
                 ],
               ),
-              // replace with actual image path
             ),
             const SizedBox(height: 20),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                commonText("Tyson vs. Tapha Gueye", size: 20, isBold: true),
+                commonText(event.name, size: 20, isBold: true),
 
                 // Time & Location
                 Row(
@@ -90,9 +113,12 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                   children: [
                     const Icon(Icons.access_time, size: 18),
                     const SizedBox(width: 6),
-                    commonText("08:00 PM", size: 14),
+                    commonText(event.time, size: 14),
                     const SizedBox(width: 12),
-                    commonText("01 Jan 2025", size: 14),
+                    commonText(
+                      "${event.date.day.toString().padLeft(2, '0')}-${event.date.month.toString().padLeft(2, '0')}-${event.date.year}",
+                      size: 14,
+                    ),
                   ],
                 ),
 
@@ -101,7 +127,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                   children: [
                     const Icon(Icons.location_on_outlined, size: 18),
                     const SizedBox(width: 6),
-                    commonText("Arène National, Pikine", size: 14),
+                    Flexible(child: commonText(event.location, size: 14)),
                   ],
                 ),
 
@@ -118,7 +144,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             // Ticket Options
             ...quantities.entries.map((entry) {
               final name = entry.key;
-              final price = prices[name]!;
+              final price = prices[name] ?? 0;
               final count = entry.value;
 
               return Padding(
@@ -163,15 +189,15 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                           ),
                           commonText(count.toString(), size: 14),
                           InkWell(
-                            child: const Icon(
-                              Icons.add,
-                              color: AppColors.primaryColor,
-                            ),
                             onTap: () {
                               setState(
                                 () => quantities[name] = quantities[name]! + 1,
                               );
                             },
+                            child: Icon(
+                              Icons.add,
+                              color: AppColors.primaryColor,
+                            ),
                           ),
                         ],
                       ),
@@ -184,12 +210,16 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Divider(color: AppColors.buttonColor),
             ),
+
             // Fees
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 commonText("Service Fee", size: 14),
-                commonText("0%", size: 14),
+                commonText(
+                  "${widget.event.ticketPrices.serviceFee} %",
+                  size: 14,
+                ),
               ],
             ),
 
@@ -197,7 +227,10 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 commonText("Processing Fee", size: 14),
-                commonText("0%", size: 14),
+                commonText(
+                  "${widget.event.ticketPrices.processingFee} %",
+                  size: 14,
+                ),
               ],
             ),
 
@@ -214,12 +247,12 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   commonText(
-                    "Total Prix",
+                    "Total Price",
                     fontWeight: FontWeight.bold,
                     size: 14,
                   ),
                   commonText(
-                    "${totalPrice} FCFA",
+                    "$totalPrice FCFA",
                     fontWeight: FontWeight.bold,
                     color: AppColors.primaryColor,
                     size: 14,
@@ -233,7 +266,20 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             commonButton(
               "Confirm",
               onTap: () {
-                Get.to(CheckoutPage());
+                if (totalPrice > 0) {
+                  Get.to(
+                    () => CheckoutPage(
+                      event: event,
+                      amount: totalPrice,
+                      quantities: quantities,
+                    ),
+                  );
+                } else {
+                  commonSnackbar(
+                    title: "No Tickets Found",
+                    message: "Please add at least one ticket to proceed.",
+                  );
+                }
               },
             ),
           ],

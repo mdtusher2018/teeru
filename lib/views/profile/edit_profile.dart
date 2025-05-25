@@ -167,6 +167,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/controllers/edit_profile_controller.dart';
+import 'package:trreu/utils/app_constants.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
@@ -202,11 +203,13 @@ class EditProfileScreen extends StatelessWidget {
                               controller.coverImage.value != null
                                   ? FileImage(controller.coverImage.value!)
                                   : NetworkImage(
-                                        controller
-                                            .controller
-                                            .userProfile
-                                            .value!
-                                            .profileImage,
+                                        getFullImageUrl(
+                                          controller
+                                              .controller
+                                              .userProfile
+                                              .value!
+                                              .profileImage,
+                                        ),
                                       )
                                       as ImageProvider,
                           fit: BoxFit.cover,
@@ -243,11 +246,13 @@ class EditProfileScreen extends StatelessWidget {
                                             controller.profileImage.value!,
                                           )
                                           : NetworkImage(
-                                                controller
-                                                    .controller
-                                                    .userProfile
-                                                    .value!
-                                                    .coverImage,
+                                                getFullImageUrl(
+                                                  controller
+                                                      .controller
+                                                      .userProfile
+                                                      .value!
+                                                      .coverImage,
+                                                ),
                                               )
                                               as ImageProvider,
                                 ),

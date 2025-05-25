@@ -10,7 +10,7 @@ Widget commonText(
   bool isBold = false,
   bool islogoText = false,
   bool softwarp = true,
-
+  maxLine,
   bool haveUnderline = false,
   fontWeight,
   TextAlign textAlign = TextAlign.left,
@@ -19,7 +19,7 @@ Widget commonText(
     text,
     softWrap: softwarp,
     textAlign: textAlign,
-
+    maxLines: maxLine,
     style:
         (islogoText)
             ? GoogleFonts.almendra(

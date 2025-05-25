@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:trreu/views/add_card.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
@@ -35,7 +37,12 @@ class RedeemCodeScreen extends StatelessWidget {
               hintText: "Type here",
             ),
             SizedBox(height: 24),
-            commonButton("Add New Card"),
+            commonButton(
+              "Add New Card",
+              onTap: () {
+                Get.to(AddCardPage());
+              },
+            ),
           ],
         ),
       ),

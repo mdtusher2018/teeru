@@ -102,7 +102,7 @@ class ProfileScreen extends StatelessWidget {
                     _buildMenuItem(
                       "assets/icons/payment.png",
                       "Payment Method",
-                      () => Get.to(PaymentOptionScreen()),
+                      () => Get.to(PaymentMethordScreen()),
                     ),
                     _buildMenuItem(
                       "assets/icons/giftcard.png",

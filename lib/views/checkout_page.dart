@@ -1,25 +1,55 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trreu/views/add_card.dart';
+import 'package:trreu/models/common_model.dart';
+import 'package:trreu/payment/stripe_payment.dart';
+import 'package:trreu/services/TicketService.dart';
+import 'package:trreu/utils/app_constants.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/congratulations_ticket_punched.dart';
-import 'package:trreu/views/res/commonWidgets.dart'; // Make sure this has `commonText`
+import 'package:trreu/views/res/commonWidgets.dart';
 
-class CheckoutPage extends StatelessWidget {
-  const CheckoutPage({super.key});
+class CheckoutPage extends StatefulWidget {
+  final Event event;
+  final Map<String, int> quantities;
+  final int amount;
+
+  CheckoutPage({
+    super.key,
+    required this.event,
+    required this.quantities,
+    required this.amount,
+  });
+
+  @override
+  _CheckoutPageState createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage> {
+  String? selectedPaymentMethod;
+  bool isLoading = false;
+
+  // Example payment methods keys to identify
+  final List<String> paymentMethods = [
+    'Wave',
+    'Orange Money',
+    'Apple Pay',
+    'Google Pay',
+    'Card',
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar("Checkout"),
-
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Match Card
+            // Match Card (same as your code)
             Material(
               elevation: 4,
               color: AppColors.white,
@@ -34,7 +64,7 @@ class CheckoutPage extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        'https://upload.wikimedia.org/wikipedia/commons/8/8d/Lutte_s%C3%A9n%C3%A9galaise_Bercy_2013_-_Mame_Balla-Pape_Mor_L%C3%B4_-_32.jpg',
+                        getFullImageUrl(widget.event.category.image),
                         height: 80,
                         width: 80,
                         fit: BoxFit.cover,
@@ -45,17 +75,15 @@ class CheckoutPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          commonText(
-                            "Tyson vs. Tapha Gueye",
-                            size: 16,
-                            isBold: true,
-                          ),
+                          commonText(widget.event.name, size: 16, isBold: true),
                           const SizedBox(height: 4),
                           Row(
                             children: [
                               const Icon(Icons.access_time, size: 14),
                               const SizedBox(width: 4),
-                              commonText("08:00 PM    01 Jan 2025"),
+                              commonText(
+                                "${widget.event.time}    ${widget.event.date.toLocal().toString().split(' ')[0]}",
+                              ),
                             ],
                           ),
                           const SizedBox(height: 4),
@@ -63,14 +91,14 @@ class CheckoutPage extends StatelessWidget {
                             children: [
                               const Icon(Icons.location_on, size: 14),
                               const SizedBox(width: 4),
-                              commonText("Arène National, Pikine"),
+                              commonText(widget.event.location),
                             ],
                           ),
                           const SizedBox(height: 4),
-                          commonText(
-                            "Seat Info: Section A, Row 2, Seat 12",
-                            fontWeight: FontWeight.w500,
-                          ),
+                          // commonText(
+                          //   "Seat Info: Please, see options below",
+                          //   fontWeight: FontWeight.w500,
+                          // ),
                         ],
                       ),
                     ),
@@ -78,20 +106,21 @@ class CheckoutPage extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 24),
+
             // Total Price Row
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(width: 1),
               ),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   commonText("Total Prix", isBold: true, size: 16),
                   commonText(
-                    "0 FCFA",
+                    "${widget.amount} FCFA",
                     isBold: true,
                     size: 16,
                     color: Colors.green,
@@ -106,39 +135,30 @@ class CheckoutPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            PaymentButton(
-              icon: 'assets/images/Payment-Wave.png',
-              label: 'Wave',
-            ),
-            PaymentButton(
-              icon: 'assets/images/Payment-Orange money.png',
-              label: 'Orange Money',
-            ),
-            PaymentButton(
-              icon: 'assets/images/Payment-ApplePay.png',
-              label: 'Apple Pay',
-            ),
-            PaymentButton(
-              icon: 'assets/images/Payment-GooglePay.png',
-              label: 'Google Pay',
-            ),
-            InkWell(
-              onTap: () {
-                Get.to(AddCardPage());
-              },
-              child: PaymentButton(
-                icon: 'assets/images/Payment-Add Card.png',
-                label: 'Add Card',
-              ),
+            // Payment buttons dynamically with selection
+            Column(
+              children:
+                  paymentMethods.map((method) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedPaymentMethod = method;
+                        });
+                      },
+                      child: PaymentButton(
+                        icon: _getPaymentIcon(method),
+                        label: method,
+                        isSelected: selectedPaymentMethod == method,
+                      ),
+                    );
+                  }).toList(),
             ),
 
             const SizedBox(height: 24),
-            commonButton(
-              "Buy",
-              onTap: () {
-                Get.to(CongratulationTicketPunchedScreen());
-              },
-            ),
+
+            if (isLoading) Center(child: CircularProgressIndicator()),
+
+            commonButton("Buy", onTap: isLoading ? null : _onBuyPressed),
 
             const SizedBox(height: 12),
             Center(
@@ -176,13 +196,113 @@ class CheckoutPage extends StatelessWidget {
       ),
     );
   }
+
+  void _onBuyPressed() async {
+    if (selectedPaymentMethod == null) {
+      commonSnackbar(
+        title: "Error",
+        message: "Please select a payment method",
+        backgroundColor: Colors.red,
+      );
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    try {
+      // 1. Make payment and get transactionId
+      String? transactionId;
+      if (selectedPaymentMethod == "Card") {
+        transactionId = await startCardPayment(
+          context: context,
+          amount: widget.amount.toString(),
+          currency: "USD",
+        );
+      } else if (selectedPaymentMethod == "Google Pay") {
+        transactionId = await startGooglePay(
+          context: context,
+          paymentCurrency: "USD",
+          amount: widget.amount.toString(),
+          merchantName: 'Your Merchant Name',
+          merchantCountryCode: 'US',
+          matchentCurrencyCode: 'USD',
+        );
+      }
+
+      if (transactionId == null) {
+        // Payment failed or cancelled, stop here
+        setState(() => isLoading = false);
+        return;
+      }
+
+      final body = {
+        "eventId": widget.event.id,
+        "tickets":
+            widget.quantities.entries
+                .map((e) => {"type": e.key, "seat": e.value})
+                .toList(),
+        "amount": widget.amount,
+        "transactionId": transactionId,
+        "paymentMethod": selectedPaymentMethod,
+      };
+
+      final ticketService = TicketService();
+      final response = await ticketService.buyTickets(body);
+
+      if (response.success) {
+        commonSnackbar(
+          title: "Success",
+          message: response.message,
+          backgroundColor: Colors.green,
+        );
+        Get.to(() => CongratulationTicketPunchedScreen());
+      } else {
+        commonSnackbar(
+          title: "Failed",
+          message: response.message,
+          backgroundColor: Colors.red,
+        );
+      }
+    } catch (e) {
+      commonSnackbar(
+        title: "Error",
+        message: e.toString(),
+        backgroundColor: Colors.red,
+      );
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
+
+  String _getPaymentIcon(String method) {
+    switch (method) {
+      case 'Wave':
+        return 'assets/images/Payment-Wave.png';
+      case 'Orange Money':
+        return 'assets/images/Payment-Orange money.png';
+      case 'Apple Pay':
+        return 'assets/images/Payment-ApplePay.png';
+      case 'Google Pay':
+        return 'assets/images/Payment-GooglePay.png';
+      case 'Card':
+        return 'assets/images/Payment-Add Card.png';
+      default:
+        return 'assets/images/Payment-Wave.png';
+    }
+  }
 }
 
 class PaymentButton extends StatelessWidget {
   final String icon;
   final String label;
+  final bool isSelected;
 
-  const PaymentButton({required this.icon, required this.label, super.key});
+  const PaymentButton({
+    required this.icon,
+    required this.label,
+    this.isSelected = false,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -190,8 +310,12 @@ class PaymentButton extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(
+          color: isSelected ? AppColors.primaryColor : Colors.grey.shade300,
+          width: isSelected ? 2 : 1,
+        ),
         borderRadius: BorderRadius.circular(8),
+        color: isSelected ? AppColors.primaryColor.withOpacity(0.2) : null,
       ),
       child: Row(
         children: [

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/splash_page.dart';
 
-void main() {
+import 'payment/keys.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = publishableKey;
+  await Stripe.instance.applySettings();
   runApp(const MyApp());
 }
 

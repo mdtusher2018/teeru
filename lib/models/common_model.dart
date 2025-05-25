@@ -119,3 +119,43 @@ class PaginationMeta {
     );
   }
 }
+
+class CardModel {
+  String cardHolderName;
+  String cardNumber;
+  String expiryMonth;
+  String expiryYear;
+  String cvv;
+  String cardBrand;
+
+  CardModel({
+    required this.cardHolderName,
+    required this.cardNumber,
+    required this.expiryMonth,
+    required this.expiryYear,
+    required this.cvv,
+    required this.cardBrand,
+  });
+
+  factory CardModel.fromJson(Map<String, dynamic> json) {
+    return CardModel(
+      cardHolderName: json['cardHolderName'] ?? '',
+      cardNumber: json['cardNumber'] ?? '',
+      expiryMonth: json['expiryMonth'] ?? '',
+      expiryYear: json['expiryYear'] ?? '',
+      cvv: json['cvv'] ?? '',
+      cardBrand: json['cardBrand'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'cardHolderName': cardHolderName,
+      'cardNumber': cardNumber,
+      'expiryMonth': expiryMonth,
+      'expiryYear': expiryYear,
+      'cvv': cvv,
+      'cardBrand': cardBrand,
+    };
+  }
+}

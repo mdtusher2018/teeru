@@ -1,6 +1,9 @@
 import 'dart:developer';
 
+import 'package:trreu/models/add_card_model.dart';
+import 'package:trreu/models/common_model.dart';
 import 'package:trreu/models/profile_model.dart';
+import 'package:trreu/models/user_payment_cards_model.dart';
 import 'package:trreu/services/api_service.dart';
 import 'package:trreu/utils/ApiEndpoints.dart';
 import 'dart:convert';
@@ -55,5 +58,25 @@ class UserService {
     } else {
       throw Exception('Failed to update profile: ${response.body}');
     }
+  }
+
+  Future<UserSpecificPaymentCardsResponse> getPaymentCards(
+    String userId,
+  ) async {
+    final response = await _apiService.get(ApiEndpoints.myCards);
+    return UserSpecificPaymentCardsResponse.fromJson(response);
+  }
+
+  Future<AddCardResponse> addCard(CardModel cardRequest) async {
+    log('Adding card with body: ${cardRequest.toJson()}');
+
+    final response = await _apiService.post(
+      ApiEndpoints.addCard,
+      cardRequest.toJson(),
+    );
+
+    log('Add card response: $response');
+
+    return AddCardResponse.fromJson(response);
   }
 }

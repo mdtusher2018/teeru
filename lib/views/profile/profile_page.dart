@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/controllers/profile_controller.dart';
+import 'package:trreu/services/local_storage_service.dart';
 import 'package:trreu/utils/app_constants.dart';
 import 'package:trreu/views/auth/login_page.dart';
 import 'package:trreu/views/colors.dart';
@@ -124,7 +125,15 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 // Sign Out Button
-                commonButton("Sign Out", onTap: () => Get.to(LoginScreen())),
+                commonButton(
+                  "Sign Out",
+                  onTap: () {
+                    LocalStorageService _localStorageService =
+                        LocalStorageService();
+                    _localStorageService.removeToken();
+                    Get.to(LoginScreen());
+                  },
+                ),
               ],
             ),
           ),

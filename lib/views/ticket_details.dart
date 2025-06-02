@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/models/common_model.dart';
+import 'package:trreu/services/local_storage_service.dart';
 import 'package:trreu/utils/app_constants.dart';
 import 'package:trreu/views/checkout_page.dart';
 import 'package:trreu/views/colors.dart';
@@ -265,7 +266,18 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             // Confirm Button
             commonButton(
               "Confirm",
-              onTap: () {
+              onTap: () async {
+                LocalStorageService _localService = LocalStorageService();
+                String? token = await _localService.getToken();
+
+                if (token == null || token.isEmpty) {
+                  commonSnackbar(
+                    title: "Not Authorized",
+                    message: "Please login to buy Ticket.",
+                  );
+                  return;
+                }
+
                 if (totalPrice > 0) {
                   Get.to(
                     () => CheckoutPage(

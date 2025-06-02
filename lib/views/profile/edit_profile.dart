@@ -208,7 +208,7 @@ class EditProfileScreen extends StatelessWidget {
                                               .controller
                                               .userProfile
                                               .value!
-                                              .profileImage,
+                                              .coverImage,
                                         ),
                                       )
                                       as ImageProvider,
@@ -251,7 +251,7 @@ class EditProfileScreen extends StatelessWidget {
                                                       .controller
                                                       .userProfile
                                                       .value!
-                                                      .coverImage,
+                                                      .profileImage,
                                                 ),
                                               )
                                               as ImageProvider,

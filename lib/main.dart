@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:trreu/payment.dart';
 import 'package:trreu/views/colors.dart';
-import 'package:trreu/views/splash_page.dart';
 
 import 'payment/keys.dart';
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(backgroundColor: AppColors.white),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SplashScreen(),
+      home: TestPaymentPage(),
     );
   }
 }

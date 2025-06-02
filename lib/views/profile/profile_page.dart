@@ -98,7 +98,9 @@ class ProfileScreen extends StatelessWidget {
                     _buildMenuItem(
                       "assets/icons/profile.png",
                       "Manage Profile",
-                      () => Get.to(EditProfileScreen()),
+                      () => Get.to(EditProfileScreen())!.then((value) {
+                        controller.fetchProfile();
+                      }),
                     ),
                     _buildMenuItem(
                       "assets/icons/payment.png",

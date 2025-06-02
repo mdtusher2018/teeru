@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/models/common_model.dart';
+import 'package:trreu/payment.dart';
 import 'package:trreu/payment/stripe_payment.dart';
 import 'package:trreu/services/TicketService.dart';
 import 'package:trreu/utils/app_constants.dart';
@@ -227,6 +228,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
           merchantCountryCode: 'US',
           matchentCurrencyCode: 'USD',
         );
+      } else {
+        bool success = await payWithPayDunya(
+          amount: widget.amount.toDouble(),
+          description: 'Test payment',
+          customerName: 'John Doe',
+          customerEmail: 'john@example.com',
+          customerPhone: '+221771234567',
+        );
+
+        if (!success) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Payment failed')));
+        }
       }
 
       if (transactionId == null) {

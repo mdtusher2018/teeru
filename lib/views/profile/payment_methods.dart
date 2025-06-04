@@ -47,6 +47,7 @@ class PaymentMethordScreen extends StatelessWidget {
                 }
                 return ListView.separated(
                   shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: controller.cards.length,
                   separatorBuilder: (_, __) => SizedBox(height: 16),
                   itemBuilder: (context, index) {

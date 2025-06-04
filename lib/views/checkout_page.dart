@@ -38,7 +38,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     'Apple',
     'Google',
     'Card',
-    'stripe',
+    // 'stripe',
   ];
 
   @override
@@ -48,152 +48,158 @@ class _CheckoutPageState extends State<CheckoutPage> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Match Card (same as your code)
-            Material(
-              elevation: 4,
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(12),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding: const EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        getFullImageUrl(widget.event.category.image),
-                        height: 80,
-                        width: 80,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          commonText(widget.event.name, size: 16, isBold: true),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              const Icon(Icons.access_time, size: 14),
-                              const SizedBox(width: 4),
-                              commonText(
-                                "${widget.event.time}    ${widget.event.date.toLocal().toString().split(' ')[0]}",
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              const Icon(Icons.location_on, size: 14),
-                              const SizedBox(width: 4),
-                              commonText(widget.event.location),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          // commonText(
-                          //   "Seat Info: Please, see options below",
-                          //   fontWeight: FontWeight.w500,
-                          // ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            // Total Price Row
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(width: 1),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  commonText("Total Prix", isBold: true, size: 16),
-                  commonText(
-                    "${widget.amount} FCFA",
-                    isBold: true,
-                    size: 16,
-                    color: Colors.green,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Match Card (same as your code)
+              Material(
+                elevation: 4,
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                ],
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          getFullImageUrl(widget.event.category.image),
+                          height: 80,
+                          width: 80,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            commonText(
+                              widget.event.name,
+                              size: 16,
+                              isBold: true,
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                const Icon(Icons.access_time, size: 14),
+                                const SizedBox(width: 4),
+                                commonText(
+                                  "${widget.event.time}    ${widget.event.date.toLocal().toString().split(' ')[0]}",
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                const Icon(Icons.location_on, size: 14),
+                                const SizedBox(width: 4),
+                                commonText(widget.event.location),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            // commonText(
+                            //   "Seat Info: Please, see options below",
+                            //   fontWeight: FontWeight.w500,
+                            // ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: 24),
 
-            const SizedBox(height: 24),
-            Center(
-              child: commonText("Payment Methods", isBold: true, size: 16),
-            ),
-            const SizedBox(height: 12),
-
-            // Payment buttons dynamically with selection
-            Column(
-              children:
-                  paymentMethods.map((method) {
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          selectedPaymentMethod = method;
-                        });
-                      },
-                      child: PaymentButton(
-                        icon: _getPaymentIcon(method),
-                        label: method,
-                        isSelected: selectedPaymentMethod == method,
-                      ),
-                    );
-                  }).toList(),
-            ),
-
-            const SizedBox(height: 24),
-
-            if (isLoading) Center(child: CircularProgressIndicator()),
-
-            commonButton("Buy", onTap: isLoading ? null : _onBuyPressed),
-
-            const SizedBox(height: 12),
-            Center(
-              child: Text.rich(
-                TextSpan(
-                  text: "By continuing, you agree to our ",
-                  style: const TextStyle(fontSize: 12),
+              // Total Price Row
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(width: 1),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextSpan(
-                      text: "Terms of Use",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                    const TextSpan(text: " and "),
-                    TextSpan(
-                      text: "Privacy Policy.",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                    TextSpan(
-                      text: "\nAll payments are encrypted and 100% secure.",
-                      style: TextStyle(fontStyle: FontStyle.italic),
+                    commonText("Total Prix", isBold: true, size: 16),
+                    commonText(
+                      "${widget.amount} FCFA",
+                      isBold: true,
+                      size: 16,
+                      color: Colors.green,
                     ),
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 4),
-          ],
+
+              const SizedBox(height: 24),
+              Center(
+                child: commonText("Payment Methods", isBold: true, size: 16),
+              ),
+              const SizedBox(height: 12),
+
+              // Payment buttons dynamically with selection
+              Column(
+                children:
+                    paymentMethods.map((method) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            selectedPaymentMethod = method;
+                          });
+                        },
+                        child: PaymentButton(
+                          icon: _getPaymentIcon(method),
+                          label: method,
+                          isSelected: selectedPaymentMethod == method,
+                        ),
+                      );
+                    }).toList(),
+              ),
+
+              const SizedBox(height: 24),
+
+              if (isLoading) Center(child: CircularProgressIndicator()),
+
+              commonButton("Buy", onTap: isLoading ? null : _onBuyPressed),
+
+              const SizedBox(height: 12),
+              Center(
+                child: Text.rich(
+                  TextSpan(
+                    text: "By continuing, you agree to our ",
+                    style: const TextStyle(fontSize: 12),
+                    children: [
+                      TextSpan(
+                        text: "Terms of Use",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                      const TextSpan(text: " and "),
+                      TextSpan(
+                        text: "Privacy Policy.",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "\nAll payments are encrypted and 100% secure.",
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+            ],
+          ),
         ),
       ),
     );
@@ -220,7 +226,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           amount: widget.amount.toString(),
           currency: "USD",
         );
-      } else if (selectedPaymentMethod == "Google Pay") {
+      } else if (selectedPaymentMethod == "Google") {
         transactionId = await startGooglePay(
           context: context,
           paymentCurrency: "USD",

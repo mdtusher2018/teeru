@@ -57,6 +57,7 @@ class _PayDunyaPaymentPageState extends State<PayDunyaPaymentPage> {
               'email': widget.customerEmail,
               'phone': widget.customerPhone,
             },
+            "channels": ["card", "mtn-benin", "orange-money-senegal", "wave"],
           },
           'store': {'name': 'Test Store'},
           'actions': {

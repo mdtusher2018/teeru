@@ -78,6 +78,7 @@ Future<String?> startGooglePay({
   );
   Map<String, dynamic>? intentPaymentData;
   intentPaymentData = null;
+  log(googlePaySupported.toString());
   if (googlePaySupported) {
     try {
       // 1. Create PaymentIntent

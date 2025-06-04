@@ -44,6 +44,7 @@ dependencies:
   flutter_stripe: ^11.5.0
   paydunya: ^1.0.3
   url_launcher: ^6.3.1
+  webview_flutter: ^4.13.0
 
 dev_dependencies:
   flutter_test:

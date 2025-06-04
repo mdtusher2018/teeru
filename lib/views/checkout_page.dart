@@ -34,10 +34,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
   // Example payment methods keys to identify
   final List<String> paymentMethods = [
     'Wave',
-    'Orange Money',
-    'Apple Pay',
-    'Google Pay',
+    'OrangeMoney',
+    'Apple',
+    'Google',
     'Card',
+    'stripe',
   ];
 
   @override
@@ -229,18 +230,26 @@ class _CheckoutPageState extends State<CheckoutPage> {
           matchentCurrencyCode: 'USD',
         );
       } else {
-        bool success = await payWithPayDunya(
-          amount: widget.amount.toDouble(),
-          description: 'Test payment',
-          customerName: 'John Doe',
-          customerEmail: 'john@example.com',
-          customerPhone: '+221771234567',
+        // In your button press or wherever you want to start payment
+        final result = await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder:
+                (_) => PayDunyaPaymentPage(
+                  amount: widget.amount.toDouble(),
+                  description: 'Test Payment',
+                  customerName: 'John Doe',
+                  customerEmail: 'john@example.com',
+                  customerPhone: '771111111',
+                ),
+          ),
         );
 
-        if (!success) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Payment failed')));
+        if (result != null && result['status'] == 'success') {
+          transactionId = result['transactionId'];
+        } else if (result != null && result['status'] == 'cancelled') {
+          print('Payment cancelled');
+        } else {
+          print('Payment flow exited without explicit result');
         }
       }
 
@@ -293,16 +302,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
     switch (method) {
       case 'Wave':
         return 'assets/images/Payment-Wave.png';
-      case 'Orange Money':
+      case 'OrangeMoney':
         return 'assets/images/Payment-Orange money.png';
-      case 'Apple Pay':
+      case 'Apple':
         return 'assets/images/Payment-ApplePay.png';
-      case 'Google Pay':
+      case 'Google':
         return 'assets/images/Payment-GooglePay.png';
       case 'Card':
         return 'assets/images/Payment-Add Card.png';
       default:
-        return 'assets/images/Payment-Wave.png';
+        return 'assets/images/Payment-Add Card.png';
     }
   }
 }

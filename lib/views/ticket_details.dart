@@ -278,7 +278,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                   return;
                 }
 
-                if (totalPrice > 0) {
+                if (totalPrice > 200) {
                   Get.to(
                     () => CheckoutPage(
                       event: event,
@@ -288,8 +288,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                   );
                 } else {
                   commonSnackbar(
-                    title: "No Tickets Found",
-                    message: "Please add at least one ticket to proceed.",
+                    title: "Invalid Total Amount",
+                    message: "Mimimum amount is 200 FCFA.",
                   );
                 }
               },

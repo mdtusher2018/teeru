@@ -16,55 +16,57 @@ class AddCardPage extends StatelessWidget {
       appBar: commonAppBar("New Card", color: AppColors.primaryColor),
       body: Padding(
         padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              height: 180,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                image: DecorationImage(
-                  image: AssetImage("assets/images/Master_Card.png"),
-                  fit: BoxFit.cover,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16),
+                height: 180,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/Master_Card.png"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 16),
-            commonTextfield(
-              controller.cardHolderNameController,
-              hintText: "Cardholder Name",
-            ),
-            SizedBox(height: 16),
-            commonTextfield(
-              controller.cardNumberController,
-              hintText: "Card Number",
-            ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: commonTextfield(
-                    controller.expireController,
-                    hintText: "MM/YY",
+              SizedBox(height: 16),
+              commonTextfield(
+                controller.cardHolderNameController,
+                hintText: "Cardholder Name",
+              ),
+              SizedBox(height: 16),
+              commonTextfield(
+                controller.cardNumberController,
+                hintText: "Card Number",
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: commonTextfield(
+                      controller.expireController,
+                      hintText: "MM/YY",
+                    ),
                   ),
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: commonTextfield(
-                    controller.cvvController,
-                    hintText: "CVV",
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: commonTextfield(
+                      controller.cvvController,
+                      hintText: "CVV",
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
-            Obx(
-              () =>
-                  controller.isLoading.value
-                      ? CircularProgressIndicator()
-                      : commonButton("Add Card", onTap: controller.addCard),
-            ),
-          ],
+                ],
+              ),
+              SizedBox(height: 16),
+              Obx(
+                () =>
+                    controller.isLoading.value
+                        ? CircularProgressIndicator()
+                        : commonButton("Add Card", onTap: controller.addCard),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -31,7 +31,26 @@ class ProfileScreen extends StatelessWidget {
         final user = controller.userProfile.value;
 
         if (user == null) {
-          return Center(child: commonText("Failed to load profile"));
+          return Center(
+            child: Column(
+              children: [
+                Center(
+                  child: commonText(
+                    "Failed to load profile",
+                    size: 21,
+                    isBold: true,
+                    color: AppColors.buttonColor,
+                  ),
+                ),
+                commonButton(
+                  "Go to Login",
+                  onTap: () {
+                    Get.to(LoginScreen());
+                  },
+                ),
+              ],
+            ),
+          );
         }
 
         return SingleChildScrollView(

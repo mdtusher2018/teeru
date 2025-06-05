@@ -22,6 +22,7 @@ class SearchPage extends StatelessWidget {
                 Expanded(
                   child: commonTextfield(
                     height: 40.0,
+                    enable: false,
                     searchController,
                     prefixIcon: Icon(Icons.search),
                   ),

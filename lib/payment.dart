@@ -44,9 +44,9 @@ class _PayDunyaPaymentPageState extends State<PayDunyaPaymentPage> {
         ),
         headers: {
           'Content-Type': 'application/json',
-          'PAYDUNYA-MASTER-KEY': 'E85ehlMB-YnKq-cJ3h-rFiz-FXrZEmLiBN8e',
-          'PAYDUNYA-PRIVATE-KEY': 'test_private_7mw0PskYwDRVbxCWY1y0qdfL5Jv',
-          'PAYDUNYA-TOKEN': 'bOX44IY9joN7pZO2WKA2',
+          'PAYDUNYA-MASTER-KEY': 'UGxLuI18-F4vy-94iW-MTR0-rdvBhzHP8njr',
+          'PAYDUNYA-PRIVATE-KEY': 'test_private_clJv8fVNZA2jvkJyBkTjxTLyjjk',
+          'PAYDUNYA-TOKEN': 'L4SQORz9g3TX9EtsQbJo',
         },
         body: jsonEncode({
           'invoice': {

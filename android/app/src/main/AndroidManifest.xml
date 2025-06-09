@@ -7,7 +7,7 @@
 
 
     <application
-        android:label="trreu"
+        android:label="teeru"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

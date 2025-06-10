@@ -4,17 +4,25 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/controllers/review_controller.dart';
+import 'package:trreu/models/TicketPurchase_model.dart';
+import 'package:trreu/models/common_model.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
 class CongratulationTicketPunchedScreen extends StatelessWidget {
-  CongratulationTicketPunchedScreen({super.key});
+  TicketPurchaseData tcketData;
+  Event event;
+  CongratulationTicketPunchedScreen({
+    super.key,
+    required this.tcketData,
+    required this.event,
+  });
   final ReviewController reviewController = Get.put(ReviewController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar("Congratulation!", haveBackButton: false),
+      appBar: commonAppBar("Congratulation!".tr, haveBackButton: false),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: SingleChildScrollView(
@@ -27,7 +35,7 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     commonText(
-                      'Rate Us',
+                      'Rate Us'.tr,
                       size: 14,
                       fontWeight: FontWeight.bold,
                     ),
@@ -57,7 +65,8 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: commonText(
-                        'Tell us about your experience—we’d love to hear from you!',
+                        'Tell us about your experience—we’d love to hear from you!'
+                            .tr,
                         textAlign: TextAlign.center,
                         size: 14,
                       ),
@@ -66,7 +75,7 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: commonTextfield(
-                        hintText: 'Type here',
+                        hintText: 'Type here'.tr,
                         reviewController.commentController,
                         hintcolor: AppColors.white,
                         color: AppColors.buttonColor,
@@ -79,7 +88,9 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
               SizedBox(height: 16),
               Obx(
                 () => commonButton(
-                  reviewController.isLoading.value ? "Submitting..." : "Submit",
+                  reviewController.isLoading.value
+                      ? "Submitting...".tr
+                      : "Submit".tr,
                   onTap:
                       reviewController.isLoading.value
                           ? null
@@ -98,6 +109,7 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
   }
 
   Widget _buildTicketCard(BuildContext context) {
+    final eventDate = tcketData.createdAt;
     return Container(
       padding: const EdgeInsets.all(16),
       margin: EdgeInsets.all(16),
@@ -105,10 +117,14 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          commonText("Wed, Jan 1 • 20h", size: 14, color: AppColors.white),
+          commonText(
+            "${eventDate.day}/${eventDate.month}/${eventDate.year} • ${eventDate.hour}h",
+            size: 14,
+            color: AppColors.white,
+          ),
           const SizedBox(height: 6),
           commonText(
-            "Tyson vs. Tapha Gueye",
+            event.name,
             size: 18,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -124,7 +140,7 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
               const SizedBox(width: 4),
               Flexible(
                 child: commonText(
-                  "Arène National, Pikine",
+                  event.location,
                   size: 14,
                   color: Colors.white70,
                 ),
@@ -142,7 +158,9 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
               children: [
                 BarcodeWidget(
                   padding: EdgeInsets.symmetric(horizontal: 40),
-                  data: 'ticket data', // You can use any ticket ID or code here
+                  data:
+                      'ticket data'
+                          .tr, // You can use any ticket ID or code here
                   barcode: Barcode.code128(),
                   width: double.infinity,
                   height: 90,
@@ -150,7 +168,7 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 commonText(
-                  "A screenshot of your ticket will not be accepted",
+                  "A screenshot of your ticket will not be accepted".tr,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -160,35 +178,53 @@ class CongratulationTicketPunchedScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Ticket Type Column
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  commonText("Ticket Type", size: 12, color: AppColors.white),
-                  const SizedBox(height: 4),
                   commonText(
-                    "Loge",
-                    size: 14,
-                    fontWeight: FontWeight.bold,
+                    "Ticket Type".tr,
+                    size: 12,
                     color: AppColors.white,
                   ),
+                  const SizedBox(height: 4),
+                  ...tcketData.tickets.map((ticket) {
+                    final parts = ticket.type.split(' ');
+                    final ticketType = parts.isNotEmpty ? parts[0] : "N/A";
+                    return commonText(
+                      ticketType,
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.white,
+                    );
+                  }).toList(),
                 ],
               ),
+
+              // Seat Number Column
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  commonText("SEATING LEVEL", size: 12, color: AppColors.white),
-                  const SizedBox(height: 4),
                   commonText(
-                    "VVIP",
-                    size: 14,
-                    fontWeight: FontWeight.bold,
+                    "Seat Number".tr,
+                    size: 12,
                     color: AppColors.white,
                   ),
+                  const SizedBox(height: 4),
+                  ...tcketData.tickets.map((ticket) {
+                    final parts = ticket.type.split(' ');
+                    final seat = parts.length > 1 ? parts[1] : "N/A";
+                    return commonText(
+                      seat,
+                      size: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.white,
+                    );
+                  }).toList(),
                 ],
               ),
             ],
           ),
-
           SizedBox(height: 80),
         ],
       ),

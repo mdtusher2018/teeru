@@ -133,7 +133,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                 ),
 
                 commonText(
-                  "Seat Info: Please, see options below",
+                  "Seat Info: Please, see options below".tr,
                   fontWeight: FontWeight.bold,
                   size: 14,
                 ),
@@ -216,7 +216,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                commonText("Service Fee", size: 14),
+                commonText("Service Fee".tr, size: 14),
                 commonText(
                   "${widget.event.ticketPrices.serviceFee} %",
                   size: 14,
@@ -227,7 +227,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                commonText("Processing Fee", size: 14),
+                commonText("Processing Fee".tr, size: 14),
                 commonText(
                   "${widget.event.ticketPrices.processingFee} %",
                   size: 14,
@@ -248,7 +248,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   commonText(
-                    "Total Price",
+                    "Total Price".tr,
                     fontWeight: FontWeight.bold,
                     size: 14,
                   ),
@@ -265,15 +265,15 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
 
             // Confirm Button
             commonButton(
-              "Confirm",
+              "Confirm".tr,
               onTap: () async {
                 LocalStorageService _localService = LocalStorageService();
                 String? token = await _localService.getToken();
 
                 if (token == null || token.isEmpty) {
                   commonSnackbar(
-                    title: "Not Authorized",
-                    message: "Please login to buy Ticket.",
+                    title: "Not Authorized".tr,
+                    message: "Please login to buy Ticket.".tr,
                   );
                   return;
                 }

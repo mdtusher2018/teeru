@@ -1,5 +1,6 @@
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trreu/models/user_tickets_model.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
@@ -12,7 +13,7 @@ class ViewTicketScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar("View Tickets"),
+      appBar: commonAppBar("View Tickets".tr),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: SingleChildScrollView(
@@ -89,7 +90,7 @@ class ViewTicketScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 commonText(
-                  "A screenshot of your ticket will not be accepted",
+                  "A screenshot of your ticket will not be accepted".tr,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -101,13 +102,13 @@ class ViewTicketScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               commonText(
-                "Ticket Type",
+                "Ticket Type".tr,
                 size: 14,
                 color: AppColors.white,
                 isBold: true,
               ),
               commonText(
-                "SEAT",
+                "SEAT".tr,
                 size: 14,
                 color: AppColors.white,
                 isBold: true,

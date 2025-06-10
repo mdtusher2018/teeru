@@ -15,7 +15,7 @@ class RedeemCodeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-        "Redeem Code",
+        "Redeem Code".tr,
         color: AppColors.primaryColor,
         textcolor: AppColors.white,
       ),
@@ -25,7 +25,7 @@ class RedeemCodeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            commonText("Enter Code", size: 16),
+            commonText("Enter Code".tr, size: 16),
             SizedBox(height: 8),
             commonTextfield(
               redeemController,
@@ -34,11 +34,11 @@ class RedeemCodeScreen extends StatelessWidget {
                 color: AppColors.black,
               ),
               borderColor: AppColors.white,
-              hintText: "Type here",
+              hintText: "Type here".tr,
             ),
             SizedBox(height: 24),
             commonButton(
-              "Add New Card",
+              "Add New Card".tr,
               onTap: () {
                 Get.to(AddCardPage());
               },

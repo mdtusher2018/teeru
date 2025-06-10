@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/profile/profile_page.dart';
 import 'package:trreu/views/ticket.dart';
@@ -37,21 +38,21 @@ class _RootPageState extends State<RootPage> {
               "assets/navigation/home.png",
               color: (_currentIndex == 0) ? Colors.white : Colors.grey,
             ),
-            label: 'Home',
+            label: 'Home'.tr,
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
               "assets/navigation/Ticket.png",
               color: (_currentIndex == 1) ? Colors.white : Colors.grey,
             ),
-            label: 'Tickets',
+            label: 'Tickets'.tr,
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
               "assets/navigation/Profile.png",
               color: (_currentIndex == 2) ? Colors.white : Colors.grey,
             ),
-            label: 'Profile',
+            label: 'Profile'.tr,
           ),
         ],
       ),

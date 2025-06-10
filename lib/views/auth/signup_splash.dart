@@ -45,7 +45,8 @@ class _SignUpSplashScreenState extends State<SignUpSplashScreen> {
                 ),
                 SizedBox(height: 20),
                 commonText(
-                  "Your account has been successfully\ncreated. You’re all set to start your\njourney with Teeru.",
+                  "Your account has been successfully\ncreated. You’re all set to start your\njourney with Teeru."
+                      .tr,
                   isBold: true,
                   color: AppColors.white,
                   size: 16,

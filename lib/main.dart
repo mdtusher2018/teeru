@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:trreu/AppTranslations.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/splash_page.dart';
 
@@ -23,6 +24,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       title: 'Flutter Demo',
+
+      translations: AppTranslations(), // <-- Add this
+      locale: const Locale('fr', 'FR'), // default language
+      fallbackLocale: const Locale('en', 'US'), // fallback if wrong locale
+
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.white,
         appBarTheme: AppBarTheme(backgroundColor: AppColors.white),

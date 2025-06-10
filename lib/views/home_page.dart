@@ -13,9 +13,16 @@ import 'package:trreu/views/search_page.dart';
 import 'package:trreu/views/sports_page.dart';
 import 'package:trreu/views/ticket_details.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final HomeController controller = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +41,23 @@ class HomePage extends StatelessWidget {
                 commonText("Thies, SN", size: 14),
               ],
             ),
-            const CircleAvatar(
-              radius: 10,
-              backgroundImage: AssetImage(
-                'assets/images/france.png',
-              ), // French flag icon
+            GestureDetector(
+              onTap: () {
+                if (Get.locale?.languageCode == 'en') {
+                  Get.updateLocale(const Locale('fr', 'FR'));
+                } else {
+                  Get.updateLocale(const Locale('en', 'US'));
+                }
+                setState(() {});
+              },
+              child: CircleAvatar(
+                radius: 12,
+                backgroundImage: AssetImage(
+                  Get.locale?.languageCode == 'fr'
+                      ? 'assets/images/france.png'
+                      : 'assets/images/usa.png',
+                ),
+              ),
             ),
           ],
         ),
@@ -56,7 +75,7 @@ class HomePage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: commonTextfield(
-                    hintText: "Teams, Artists, Concerts on Teeru",
+                    hintText: "Teams, Artists, Concerts on Teeru".tr,
                     enable: false,
                     TextEditingController(),
                   ),
@@ -71,7 +90,7 @@ class HomePage extends StatelessWidget {
                       onTap: () {
                         Get.to(ContactUsScreen());
                       },
-                      child: commonText("Contact Us", isBold: true),
+                      child: commonText("Contact Us".tr, isBold: true),
                     ),
                   ],
                 ),
@@ -128,7 +147,7 @@ class HomePage extends StatelessWidget {
                 ),
                 width: MediaQuery.sizeOf(context).width * 0.9,
                 child: Marquee(
-                  text: 'Follow sur Instragram @TeeruApp.',
+                  text: 'Follow sur Instragram @TeeruApp.'.tr,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   scrollAxis: Axis.horizontal,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +167,7 @@ class HomePage extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
-                      commonText("Upcoming Events", size: 16, isBold: true),
+                      commonText("Upcoming Events".tr, size: 16, isBold: true),
                     ],
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
@@ -12,14 +13,17 @@ class ContactUsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              commonText("Contact Us", size: 16, isBold: true),
+              commonText("Contact Us".tr, size: 16, isBold: true),
               SizedBox(height: 8),
-              Row(children: [commonText('Need Help?', size: 18, isBold: true)]),
+              Row(
+                children: [commonText('Need Help?'.tr, size: 18, isBold: true)],
+              ),
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: commonText(
-                  'If you have questions, feedback, or need support using Teeru, we’re here for you.\nFeel free to reach out anytime—we’d love to hear from you.',
+                  'If you have questions, feedback, or need support using Teeru, we’re here for you.\nFeel free to reach out anytime—we’d love to hear from you.'
+                      .tr,
                   size: 14,
                   textAlign: TextAlign.center,
                 ),
@@ -28,10 +32,10 @@ class ContactUsScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   // Open email client for support email
-                  _launchEmail('support@teerun.com');
+                  _launchEmail('support@teerun.com'.tr);
                 },
                 child: commonText(
-                  '📩 support@teerun.com',
+                  '📩 support@teerun.com'.tr,
                   color: AppColors.primaryColor,
                   isBold: true,
                   size: 14,
@@ -49,14 +53,14 @@ class ContactUsScreen extends StatelessWidget {
               // Partner With Teeru Section
               Row(
                 children: [
-                  commonText('Partner With Teeru', size: 18, isBold: true),
+                  commonText('Partner With Teeru'.tr, size: 18, isBold: true),
                 ],
               ),
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: commonText(
-                  'Interested in marketing collaborations or partnerships?',
+                  'Interested in marketing collaborations or partnerships?'.tr,
                   textAlign: TextAlign.center,
                   size: 14,
                 ),
@@ -65,7 +69,7 @@ class ContactUsScreen extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   // Open email client for contact email
-                  _launchEmail('contact@teerun.com');
+                  _launchEmail('contact@teerun.com'.tr);
                 },
                 child: commonText(
                   '📩 contact@teerun.com',

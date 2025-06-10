@@ -27,20 +27,23 @@ class CreateNewPasswordScreen extends StatelessWidget {
 
               // Title and rules
               const SizedBox(height: 2),
-              commonText("Create a New Password", size: 16, isBold: true),
+              commonText("Create a New Password".tr, size: 16, isBold: true),
               PasswordRichText(
-                normalText: "At least ",
-                boldText: "11 characters",
-              ),
-              PasswordRichText(normalText: "At least ", boldText: "one number"),
-              PasswordRichText(
-                normalText: "At least ",
-                boldText: "one symbol",
-                tailText: " (e.g., ! @ # \$)",
+                normalText: "At least ".tr,
+                boldText: "11 characters".tr,
               ),
               PasswordRichText(
-                boldText: "Uppercase & lowercase",
-                tailText: " letters",
+                normalText: "At least ".tr,
+                boldText: "one number".tr,
+              ),
+              PasswordRichText(
+                normalText: "At least ".tr,
+                boldText: "one symbol".tr,
+                tailText: " (e.g., ! @ # \$)".tr,
+              ),
+              PasswordRichText(
+                boldText: "Uppercase & lowercase".tr,
+                tailText: " letters".tr,
               ),
               const SizedBox(height: 20),
 
@@ -48,7 +51,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
               Obx(
                 () => commonTextfield(
                   controller.newPasswordController,
-                  hintText: "New Password",
+                  hintText: "New Password".tr,
                   issuffixIconVisible: true,
                   isPasswordVisible:
                       controller.isLoading.value
@@ -66,7 +69,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
               Obx(
                 () => commonTextfield(
                   controller.confirmPasswordController,
-                  hintText: "Confirm Password",
+                  hintText: "Confirm Password".tr,
                   issuffixIconVisible: true,
                   isPasswordVisible:
                       controller.isLoading.value
@@ -83,7 +86,9 @@ class CreateNewPasswordScreen extends StatelessWidget {
               // Save Password Button
               Obx(
                 () => commonButton(
-                  controller.isLoading.value ? "Saving..." : "Save Password",
+                  controller.isLoading.value
+                      ? "Saving...".tr
+                      : "Save Password".tr,
                   onTap:
                       controller.isLoading.value
                           ? null

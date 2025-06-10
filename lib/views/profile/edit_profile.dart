@@ -180,7 +180,7 @@ class EditProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-        "Edit Profile",
+        "Edit Profile".tr,
         color: AppColors.primaryColor,
         textcolor: AppColors.white,
       ),
@@ -283,7 +283,7 @@ class EditProfileScreen extends StatelessWidget {
 
                         commonTextfield(
                           controller.fullNameController,
-                          hintText: 'Enter Full Name',
+                          hintText: 'Enter Full Name'.tr,
                           textSize: 14.0,
                           prefixIcon: const Icon(Icons.person_2_outlined),
                           enable: true,
@@ -292,7 +292,7 @@ class EditProfileScreen extends StatelessWidget {
 
                         commonTextfield(
                           controller.emailController,
-                          hintText: 'Enter Email Address',
+                          hintText: 'Enter Email Address'.tr,
                           prefixIcon: const Icon(Icons.email_outlined),
                           textSize: 14.0,
                           enable: true,
@@ -301,7 +301,7 @@ class EditProfileScreen extends StatelessWidget {
 
                         commonTextfield(
                           controller.phoneController,
-                          hintText: 'Enter Phone Number',
+                          hintText: 'Enter Phone Number'.tr,
                           prefixIcon: Padding(
                             padding: const EdgeInsets.only(top: 12.0, left: 8),
                             child: commonText("+221", size: 16),
@@ -314,7 +314,7 @@ class EditProfileScreen extends StatelessWidget {
 
                         commonTextfield(
                           controller.locationController,
-                          hintText: "Location",
+                          hintText: "Location".tr,
                           enable: true,
                         ),
 
@@ -323,8 +323,8 @@ class EditProfileScreen extends StatelessWidget {
                         Obx(
                           () => commonButton(
                             controller.isLoading.value
-                                ? "Saving..."
-                                : "Save Changes",
+                                ? "Saving...".tr
+                                : "Save Changes".tr,
                             onTap:
                                 controller.isLoading.value
                                     ? null

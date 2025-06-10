@@ -22,7 +22,7 @@ class MyTicketsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       appBar: commonAppBar(
-        "My Tickets",
+        "My Tickets".tr,
         color: AppColors.primaryColor,
         textcolor: AppColors.white,
       ),
@@ -37,7 +37,7 @@ class MyTicketsScreen extends StatelessWidget {
         if (myTicketsController.tickets.isEmpty) {
           return Center(
             child: commonText(
-              "No tickets found.",
+              "No tickets found.".tr,
               color: Colors.white,
               size: 16,
             ),
@@ -79,7 +79,7 @@ class MyTicketsScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     commonText(
-                      'Rate Us',
+                      'Rate Us'.tr,
                       size: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -110,7 +110,8 @@ class MyTicketsScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: commonText(
-                        'Tell us about your experience—we’d love to hear from you!',
+                        'Tell us about your experience—we’d love to hear from you!'
+                            .tr,
                         textAlign: TextAlign.center,
                         size: 14,
                         color: Colors.white,
@@ -120,7 +121,7 @@ class MyTicketsScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 50.0),
                       child: commonTextfield(
-                        hintText: 'Type here',
+                        hintText: 'Type here'.tr,
                         reviewController.commentController,
                         hintcolor: AppColors.white,
                         color: AppColors.buttonColor,
@@ -131,8 +132,8 @@ class MyTicketsScreen extends StatelessWidget {
                     Obx(
                       () => commonButton(
                         reviewController.isLoading.value
-                            ? "Submitting..."
-                            : "Submit",
+                            ? "Submitting...".tr
+                            : "Submit".tr,
                         onTap:
                             reviewController.isLoading.value
                                 ? null
@@ -203,7 +204,7 @@ class MyTicketsScreen extends StatelessWidget {
                   height: 35,
                   child: Center(
                     child: commonButton(
-                      "View Ticket",
+                      "View Ticket".tr,
                       color: AppColors.white,
                       textColor: AppColors.black,
                       width: 100,

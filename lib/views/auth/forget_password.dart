@@ -23,12 +23,13 @@ class ForgetPasswordScreen extends StatelessWidget {
             SizedBox(height: 20),
             Column(
               children: [
-                commonText("Forgot Password", size: 16, isBold: true),
+                commonText("Forgot Password".tr, size: 16, isBold: true),
                 SizedBox(height: 8),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.7,
                   child: commonText(
-                    "Enter email or phone number to send one time OTP Verification code",
+                    "Enter email or phone number to send one time OTP Verification code"
+                        .tr,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -37,14 +38,16 @@ class ForgetPasswordScreen extends StatelessWidget {
                 // Use controller's emailController
                 commonTextfield(
                   controller.emailController,
-                  hintText: "Enter Email or Phone Number",
+                  hintText: "Enter Email or Phone Number".tr,
                 ),
 
                 const SizedBox(height: 20),
 
                 Obx(
                   () => commonButton(
-                    controller.isLoading.value ? "Sending..." : "Generate OTP",
+                    controller.isLoading.value
+                        ? "Sending...".tr
+                        : "Generate OTP".tr,
                     height: 40,
                     onTap:
                         controller.isLoading.value
@@ -60,7 +63,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   onTap: () {
                     Get.back();
                   },
-                  child: commonText("Cancel", size: 18, isBold: true),
+                  child: commonText("Cancel".tr, size: 18, isBold: true),
                 ),
               ],
             ),

@@ -25,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
             ),
             child: Center(
               child: commonText(
-                gender,
+                gender.tr,
                 color: isSelected ? Colors.white : Colors.black,
                 size: 16,
                 fontWeight: FontWeight.bold,
@@ -47,10 +47,10 @@ class SignUpScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(child: commonText("Sign Up", size: 21, isBold: true)),
+              Center(child: commonText("Sign Up".tr, size: 21, isBold: true)),
               const SizedBox(height: 10),
               commonText(
-                'Let\'s get started',
+                'Let\'s get started'.tr,
                 size: 14,
                 isBold: true,
                 textAlign: TextAlign.center,
@@ -59,7 +59,7 @@ class SignUpScreen extends StatelessWidget {
 
               commonTextfield(
                 controller.fullNameController,
-                hintText: 'Enter Full Name',
+                hintText: 'Enter Full Name'.tr,
                 textSize: 14,
                 prefixIcon: const Icon(Icons.person_2_outlined),
                 enable: true,
@@ -70,7 +70,7 @@ class SignUpScreen extends StatelessWidget {
 
               commonTextfield(
                 controller.emailController,
-                hintText: 'Enter Email Address',
+                hintText: 'Enter Email Address'.tr,
                 prefixIcon: const Icon(Icons.email_outlined),
                 textSize: 14,
                 enable: true,
@@ -79,7 +79,7 @@ class SignUpScreen extends StatelessWidget {
 
               commonTextfield(
                 controller.phoneNumberController,
-                hintText: 'Enter Phone Number',
+                hintText: 'Enter Phone Number'.tr,
                 prefixIcon: Padding(
                   padding: const EdgeInsets.only(top: 12, left: 8),
                   child: commonText("+221", size: 16),
@@ -93,7 +93,7 @@ class SignUpScreen extends StatelessWidget {
               Obx(
                 () => commonTextfield(
                   controller.passwordController,
-                  hintText: 'Create Password',
+                  hintText: 'Create Password'.tr,
                   textSize: 14,
                   isPasswordVisible: controller.isPasswordVisible.value,
                   issuffixIconVisible: true,
@@ -109,7 +109,7 @@ class SignUpScreen extends StatelessWidget {
               Obx(
                 () => commonTextfield(
                   controller.confirmPasswordController,
-                  hintText: 'Confirm Password',
+                  hintText: 'Confirm Password'.tr,
                   textSize: 14,
                   isPasswordVisible: controller.isConfirmPasswordVisible.value,
                   issuffixIconVisible: true,
@@ -135,7 +135,9 @@ class SignUpScreen extends StatelessWidget {
 
               Obx(
                 () => commonButton(
-                  controller.isLoading.value ? 'Creating...' : 'Create Account',
+                  controller.isLoading.value
+                      ? 'Creating...'.tr
+                      : 'Create Account'.tr,
                   onTap:
                       controller.isLoading.value
                           ? null
@@ -148,26 +150,30 @@ class SignUpScreen extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              Row(
-                children: [
-                  commonText('Already have a Teeru account? ', size: 14),
-                  GestureDetector(
-                    onTap: () => Get.to(() => LoginScreen()),
-                    child: commonText(
-                      'Log In',
-                      isBold: true,
+              Center(
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 20,
+                  children: [
+                    commonText('Already have a Teeru account?'.tr, size: 14),
+                    GestureDetector(
+                      onTap: () => Get.to(() => LoginScreen()),
+                      child: commonText(
+                        'Log In'.tr,
+                        isBold: true,
+                        size: 14,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                    const Spacer(),
+                    commonText(
+                      'Cancel'.tr,
                       size: 14,
                       color: AppColors.primaryColor,
+                      isBold: true,
                     ),
-                  ),
-                  const Spacer(),
-                  commonText(
-                    'Cancel',
-                    size: 14,
-                    color: AppColors.primaryColor,
-                    isBold: true,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

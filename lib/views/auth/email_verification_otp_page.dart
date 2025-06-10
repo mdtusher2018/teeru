@@ -26,12 +26,13 @@ class EmailVerifiedOTPScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            commonText("OTP Verification", size: 18, isBold: true),
+            commonText("OTP Verification".tr, size: 18, isBold: true),
             SizedBox(height: 8),
             SizedBox(
               width: 200,
               child: commonText(
-                "We’ve sent a 6-digit code to your email/phone number.\nPlease enter the code below to continue. ",
+                "We’ve sent a 6-digit code to your email/phone number.\nPlease enter the code below to continue."
+                    .tr,
                 size: 14,
                 textAlign: TextAlign.center,
                 color: AppColors.white,
@@ -55,7 +56,7 @@ class EmailVerifiedOTPScreen extends StatelessWidget {
             SizedBox(height: 16),
 
             commonButton(
-              controller.isLoading.value ? "Verifying..." : "Verify",
+              controller.isLoading.value ? "Verifying...".tr : "Verify".tr,
               onTap:
                   controller.isLoading.value
                       ? null
@@ -66,23 +67,20 @@ class EmailVerifiedOTPScreen extends StatelessWidget {
             SizedBox(height: 16),
             SizedBox(
               width: MediaQuery.sizeOf(context).width * 0.8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                spacing: 20,
                 children: [
-                  Row(
-                    children: [
-                      commonText("Didn’t get the code?  ", isBold: true),
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(SignUpScreen());
-                        },
-                        child: commonText(
-                          "Resend",
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ],
+                  commonText("Didn’t get the code?".tr, isBold: true),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(SignUpScreen());
+                    },
+                    child: commonText(
+                      "Resend".tr,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.white,
+                    ),
                   ),
 
                   GestureDetector(
@@ -90,7 +88,7 @@ class EmailVerifiedOTPScreen extends StatelessWidget {
                       Get.back();
                     },
                     child: commonText(
-                      "Cancel",
+                      "Cancel".tr,
                       fontWeight: FontWeight.bold,
                       color: AppColors.white,
                     ),

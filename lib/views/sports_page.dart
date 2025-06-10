@@ -35,7 +35,7 @@ class SportsPage extends StatelessWidget {
                   });
                 },
                 child: commonText(
-                  "Buy",
+                  "Buy".tr,
                   fontWeight: FontWeight.bold,
                   color: AppColors.white,
                 ),

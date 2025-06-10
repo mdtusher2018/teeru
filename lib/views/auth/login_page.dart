@@ -7,9 +7,14 @@ import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 import 'package:trreu/views/root_page.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   // Initialize the controller (GetX)
   final LoginController loginController = Get.put(LoginController());
 
@@ -34,9 +39,23 @@ class LoginScreen extends StatelessWidget {
                         commonText("Thies, SN", size: 14),
                       ],
                     ),
-                    const CircleAvatar(
-                      radius: 10,
-                      backgroundImage: AssetImage('assets/images/france.png'),
+                    GestureDetector(
+                      onTap: () {
+                        if (Get.locale?.languageCode == 'en') {
+                          Get.updateLocale(const Locale('fr', 'FR'));
+                        } else {
+                          Get.updateLocale(const Locale('en', 'US'));
+                        }
+                        setState(() {});
+                      },
+                      child: CircleAvatar(
+                        radius: 12,
+                        backgroundImage: AssetImage(
+                          Get.locale?.languageCode == 'fr'
+                              ? 'assets/images/france.png'
+                              : 'assets/images/usa.png',
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -51,12 +70,12 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 16),
 
                 // Log In Title
-                commonText("Log In", size: 18, fontWeight: FontWeight.bold),
+                commonText("Log In".tr, size: 18, fontWeight: FontWeight.bold),
                 const SizedBox(height: 16),
 
                 // Email / Phone TextField
                 commonTextfield(
-                  hintText: "Enter Email or Phone Number",
+                  hintText: "Enter Email or Phone Number".tr,
                   loginController.emailController,
                 ),
 
@@ -66,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                 Obx(() {
                   return commonTextfield(
                     loginController.passwordController,
-                    hintText: "Password",
+                    hintText: "Password".tr,
                     issuffixIconVisible: true,
                     isPasswordVisible: loginController.isPasswordVisible.value,
                     changePasswordVisibility:
@@ -87,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                               loginController.rememberMe.value = val ?? false;
                             },
                           ),
-                          commonText("Keep me logged in", size: 14),
+                          commonText("Keep me logged in".tr, size: 12),
                         ],
                       ),
                     ),
@@ -96,8 +115,8 @@ class LoginScreen extends StatelessWidget {
                         Get.to(() => ForgetPasswordScreen());
                       },
                       child: commonText(
-                        "Forgot password?",
-                        size: 14,
+                        "Forgot password?".tr,
+                        size: 12,
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -110,8 +129,8 @@ class LoginScreen extends StatelessWidget {
                 Obx(
                   () => commonButton(
                     loginController.isLoading.value
-                        ? 'Logging in...'
-                        : "Log In",
+                        ? 'Logging in...'.tr
+                        : "Log In".tr,
                     onTap:
                         loginController.isLoading.value
                             ? null
@@ -123,35 +142,34 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 16),
 
                 // Sign Up / Guest
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        commonText("New to Teeru? "),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(() => SignUpScreen());
-                          },
-                          child: commonText(
-                            "Let’s get started",
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor,
-                          ),
+                Center(
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 20, // Horizontal space between children
+                    children: [
+                      commonText("New to Teeru?".tr),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => SignUpScreen());
+                        },
+                        child: commonText(
+                          "Let’s get started".tr,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
                         ),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(() => RootPage());
-                      },
-                      child: commonText(
-                        "Continue as guest",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade700,
                       ),
-                    ),
-                  ],
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => RootPage());
+                        },
+                        child: commonText(
+                          "Continue as guest".tr,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade700,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

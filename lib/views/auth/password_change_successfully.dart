@@ -16,42 +16,45 @@ class PasswordChangedSuccessfullyScreen extends StatelessWidget {
       appBar: AppBar(leading: BackButton()),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(height: 20),
-            Column(
-              children: [
-                Icon(
-                  Icons.check_box_rounded,
-                  size: 140,
-                  color: AppColors.primaryColor,
-                ),
-                SizedBox(height: 8),
-                SizedBox(
-                  width: MediaQuery.sizeOf(context).width * 0.6,
-                  child: commonText(
-                    "Congratulation! You have been successfully authenticate.",
-                    isBold: true,
-                    size: 14,
-                    textAlign: TextAlign.center,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(height: 20),
+              Column(
+                children: [
+                  Icon(
+                    Icons.check_box_rounded,
+                    size: 140,
+                    color: AppColors.primaryColor,
                   ),
-                ),
+                  SizedBox(height: 8),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.6,
+                    child: commonText(
+                      "Congratulation! You have been successfully authenticate."
+                          .tr,
+                      isBold: true,
+                      size: 14,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
 
-                const SizedBox(height: 30),
-                commonButton(
-                  "Continue",
-                  textSize: 16,
-                  onTap: () {
-                    Get.to(CreateNewPasswordScreen());
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Image.asset("assets/images/full_logo.png"),
-            SizedBox(height: 20),
-          ],
+                  const SizedBox(height: 30),
+                  commonButton(
+                    "Continue".tr,
+                    textSize: 16,
+                    onTap: () {
+                      Get.to(CreateNewPasswordScreen());
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Image.asset("assets/images/full_logo.png"),
+              SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
     );

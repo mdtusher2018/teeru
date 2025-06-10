@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
 class SplashPasswordPage extends StatelessWidget {
@@ -14,14 +15,14 @@ class SplashPasswordPage extends StatelessWidget {
             SizedBox(
               width: MediaQuery.sizeOf(context).width * 0.6,
               child: commonText(
-                "Congratulation! You have been successfully authenticate.",
+                "Congratulation! You have been successfully authenticate.".tr,
                 isBold: true,
                 size: 14,
                 textAlign: TextAlign.center,
               ),
             ),
             SizedBox(height: 30),
-            commonButton("Continue"),
+            commonButton("Continue".tr),
           ],
         ),
       ),

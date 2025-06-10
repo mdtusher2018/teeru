@@ -44,7 +44,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar("Checkout"),
+      appBar: commonAppBar("Checkout".tr),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -125,7 +125,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    commonText("Total Prix", isBold: true, size: 16),
+                    commonText("Total Prix".tr, isBold: true, size: 16),
                     commonText(
                       "${widget.amount} FCFA",
                       isBold: true,
@@ -138,7 +138,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
               const SizedBox(height: 24),
               Center(
-                child: commonText("Payment Methods", isBold: true, size: 16),
+                child: commonText("Payment Methods".tr, isBold: true, size: 16),
               ),
               const SizedBox(height: 12),
 
@@ -165,32 +165,33 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
               if (isLoading) Center(child: CircularProgressIndicator()),
 
-              commonButton("Buy", onTap: isLoading ? null : _onBuyPressed),
+              commonButton("Buy".tr, onTap: isLoading ? null : _onBuyPressed),
 
               const SizedBox(height: 12),
               Center(
                 child: Text.rich(
                   TextSpan(
-                    text: "By continuing, you agree to our ",
+                    text: "By continuing, you agree to our ".tr,
                     style: const TextStyle(fontSize: 12),
                     children: [
                       TextSpan(
-                        text: "Terms of Use",
+                        text: "Terms of Use".tr,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primaryColor,
                         ),
                       ),
-                      const TextSpan(text: " and "),
+                      TextSpan(text: " and ".tr),
                       TextSpan(
-                        text: "Privacy Policy.",
+                        text: "Privacy Policy.".tr,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primaryColor,
                         ),
                       ),
                       TextSpan(
-                        text: "\nAll payments are encrypted and 100% secure.",
+                        text:
+                            "\nAll payments are encrypted and 100% secure.".tr,
                         style: TextStyle(fontStyle: FontStyle.italic),
                       ),
                     ],
@@ -285,7 +286,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
           message: response.message,
           backgroundColor: Colors.green,
         );
-        Get.to(() => CongratulationTicketPunchedScreen());
+        Get.to(
+          () => CongratulationTicketPunchedScreen(tcketData: response.data,event:widget.event),
+        );
       } else {
         commonSnackbar(
           title: "Failed",

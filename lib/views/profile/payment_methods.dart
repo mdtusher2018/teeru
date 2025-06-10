@@ -16,7 +16,7 @@ class PaymentMethordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-        "Payment Methods",
+        "Payment Methods".tr,
         color: AppColors.primaryColor,
         textcolor: AppColors.white,
       ),
@@ -28,7 +28,7 @@ class PaymentMethordScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               commonText(
-                "Cards",
+                "Cards".tr,
                 size: 16,
                 isBold: true,
                 color: AppColors.white,
@@ -40,7 +40,7 @@ class PaymentMethordScreen extends StatelessWidget {
                 }
                 if (controller.cards.isEmpty) {
                   return commonText(
-                    "No cards found.",
+                    "No cards found.".tr,
                     color: AppColors.white,
                     size: 14,
                   );
@@ -62,7 +62,7 @@ class PaymentMethordScreen extends StatelessWidget {
               }),
               SizedBox(height: 24),
               commonButton(
-                "Add New Card",
+                "Add New Card".tr,
                 onTap: () {
                   Get.to(AddCardPage())!.then((_) {
                     // This will run when you come back from AddCardPage

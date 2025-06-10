@@ -13,7 +13,7 @@ class AddCardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: commonAppBar("New Card", color: AppColors.primaryColor),
+      appBar: commonAppBar("New Card".tr, color: AppColors.primaryColor),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: SingleChildScrollView(
@@ -33,12 +33,12 @@ class AddCardPage extends StatelessWidget {
               SizedBox(height: 16),
               commonTextfield(
                 controller.cardHolderNameController,
-                hintText: "Cardholder Name",
+                hintText: "Cardholder Name".tr,
               ),
               SizedBox(height: 16),
               commonTextfield(
                 controller.cardNumberController,
-                hintText: "Card Number",
+                hintText: "Card Number".tr,
               ),
               SizedBox(height: 16),
               Row(
@@ -46,14 +46,14 @@ class AddCardPage extends StatelessWidget {
                   Expanded(
                     child: commonTextfield(
                       controller.expireController,
-                      hintText: "MM/YY",
+                      hintText: "MM/YY".tr,
                     ),
                   ),
                   SizedBox(width: 16),
                   Expanded(
                     child: commonTextfield(
                       controller.cvvController,
-                      hintText: "CVV",
+                      hintText: "CVV".tr,
                     ),
                   ),
                 ],
@@ -63,7 +63,10 @@ class AddCardPage extends StatelessWidget {
                 () =>
                     controller.isLoading.value
                         ? CircularProgressIndicator()
-                        : commonButton("Add Card", onTap: controller.addCard),
+                        : commonButton(
+                          "Add Card".tr,
+                          onTap: controller.addCard,
+                        ),
               ),
             ],
           ),

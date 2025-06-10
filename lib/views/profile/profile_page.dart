@@ -20,7 +20,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: commonText("My Teeru's Account", size: 18, isBold: true),
+        title: commonText("My Teeru's Account".tr, size: 18, isBold: true),
         leading: SizedBox(),
       ),
       body: Obx(() {
@@ -36,14 +36,14 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Center(
                   child: commonText(
-                    "Failed to load profile",
+                    "Failed to load profile".tr,
                     size: 21,
                     isBold: true,
                     color: AppColors.buttonColor,
                   ),
                 ),
                 commonButton(
-                  "Go to Login",
+                  "Go to Login".tr,
                   onTap: () {
                     Get.to(LoginScreen());
                   },
@@ -116,29 +116,29 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     _buildMenuItem(
                       "assets/icons/profile.png",
-                      "Manage Profile",
+                      "Manage Profile".tr,
                       () => Get.to(EditProfileScreen())!.then((value) {
                         controller.fetchProfile();
                       }),
                     ),
                     _buildMenuItem(
                       "assets/icons/payment.png",
-                      "Payment Method",
+                      "Payment Method".tr,
                       () => Get.to(PaymentMethordScreen()),
                     ),
                     _buildMenuItem(
                       "assets/icons/giftcard.png",
-                      "Redeem Code",
+                      "Redeem Code".tr,
                       () => Get.to(RedeemCodeScreen()),
                     ),
                     _buildMenuItem(
                       "assets/icons/mytecaket.png",
-                      "My Tickets/Rate Us",
+                      "My Tickets/Rate Us".tr,
                       () => Get.to(MyTicketsScreen()),
                     ),
                     _buildMenuItem(
                       "assets/icons/contact.png",
-                      "Contact Us",
+                      "Contact Us".tr,
                       () => Get.to(ContactUsScreen()),
                     ),
                   ],
@@ -147,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
 
                 // Sign Out Button
                 commonButton(
-                  "Sign Out",
+                  "Sign Out".tr,
                   onTap: () {
                     LocalStorageService _localStorageService =
                         LocalStorageService();

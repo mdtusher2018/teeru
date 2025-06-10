@@ -12,7 +12,7 @@ class TicketScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: commonText(
-          "My Tickets",
+          "My Tickets".tr,
           size: 18,
           isBold: true,
           color: AppColors.white,
@@ -29,7 +29,7 @@ class TicketScreen extends StatelessWidget {
             Image.asset("assets/images/ticket.png"),
             Spacer(),
             commonButton(
-              "Discover Events",
+              "Discover Events".tr,
               onTap: () {
                 Get.to(HomePage());
               },

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/models/common_model.dart';
 import 'package:trreu/payment.dart';
-import 'package:trreu/payment/stripe_payment.dart';
+// import 'package:trreu/payment/stripe_payment.dart';
 import 'package:trreu/services/TicketService.dart';
 import 'package:trreu/utils/app_constants.dart';
 import 'package:trreu/views/colors.dart';
@@ -15,12 +15,14 @@ class CheckoutPage extends StatefulWidget {
   final Event event;
   final Map<String, int> quantities;
   final int amount;
+  final List<Map<String, dynamic>> iteams;
 
   CheckoutPage({
     super.key,
     required this.event,
     required this.quantities,
     required this.amount,
+    required this.iteams,
   });
 
   @override
@@ -33,11 +35,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   // Example payment methods keys to identify
   final List<String> paymentMethods = [
-    'Wave',
-    'OrangeMoney',
-    'Apple',
-    'Google',
-    'Card',
+    // 'Wave',
+    // 'OrangeMoney',
+    // 'Apple',
+    // 'Google',
+    // 'Card',
     // 'stripe',
   ];
 
@@ -137,30 +139,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
 
               const SizedBox(height: 24),
-              Center(
-                child: commonText("Payment Methods".tr, isBold: true, size: 16),
-              ),
-              const SizedBox(height: 12),
 
-              // Payment buttons dynamically with selection
-              Column(
-                children:
-                    paymentMethods.map((method) {
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            selectedPaymentMethod = method;
-                          });
-                        },
-                        child: PaymentButton(
-                          icon: _getPaymentIcon(method),
-                          label: method,
-                          isSelected: selectedPaymentMethod == method,
-                        ),
-                      );
-                    }).toList(),
-              ),
+              // Center(
+              //   child: commonText("Payment Methods".tr, isBold: true, size: 16),
+              // ),
+              // const SizedBox(height: 12),
 
+              // // Payment buttons dynamically with selection
+              // Column(
+              //   children:
+              //       paymentMethods.map((method) {
+              //         return InkWell(
+              //           onTap: () {
+              //             setState(() {
+              //               selectedPaymentMethod = method;
+              //             });
+              //           },
+              //           child: PaymentButton(
+              //             icon: _getPaymentIcon(method),
+              //             label: method,
+              //             isSelected: selectedPaymentMethod == method,
+              //           ),
+              //         );
+              //       }).toList(),
+              // ),
               const SizedBox(height: 24),
 
               if (isLoading) Center(child: CircularProgressIndicator()),
@@ -207,58 +209,82 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   void _onBuyPressed() async {
-    if (selectedPaymentMethod == null) {
-      commonSnackbar(
-        title: "Error",
-        message: "Please select a payment method",
-        backgroundColor: Colors.red,
-      );
-      return;
-    }
+    // if (selectedPaymentMethod == null) {
+    //   commonSnackbar(
+    //     title: "Error",
+    //     message: "Please select a payment method",
+    //     backgroundColor: Colors.red,
+    //   );
+    //   return;
+    // }
 
     setState(() => isLoading = true);
 
     try {
       // 1. Make payment and get transactionId
       String? transactionId;
-      if (selectedPaymentMethod == "Card") {
-        transactionId = await startCardPayment(
-          context: context,
-          amount: widget.amount.toString(),
-          currency: "USD",
-        );
-      } else if (selectedPaymentMethod == "Google") {
-        transactionId = await startGooglePay(
-          context: context,
-          paymentCurrency: "USD",
-          amount: widget.amount.toString(),
-          merchantName: 'Your Merchant Name',
-          merchantCountryCode: 'US',
-          matchentCurrencyCode: 'USD',
-        );
-      } else {
-        // In your button press or wherever you want to start payment
-        final result = await Navigator.of(context).push(
-          MaterialPageRoute(
-            builder:
-                (_) => PayDunyaPaymentPage(
-                  amount: widget.amount.toDouble(),
-                  description: 'Test Payment',
-                  customerName: 'John Doe',
-                  customerEmail: 'john@example.com',
-                  customerPhone: '771111111',
-                ),
-          ),
-        );
 
-        if (result != null && result['status'] == 'success') {
-          transactionId = result['transactionId'];
-        } else if (result != null && result['status'] == 'cancelled') {
-          print('Payment cancelled');
-        } else {
-          print('Payment flow exited without explicit result');
-        }
+      // In your button press or wherever you want to start payment
+      final result = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder:
+              (_) => PayDunyaPaymentPage(
+                amount: widget.amount.toDouble(),
+                description: 'Test Payment',
+                customerName: 'John Doe',
+                customerEmail: 'john@example.com',
+                customerPhone: '771111111',
+                iteams: widget.iteams,
+              ),
+        ),
+      );
+
+      if (result != null && result['status'] == 'success') {
+        transactionId = result['transactionId'];
+      } else if (result != null && result['status'] == 'cancelled') {
+        print('Payment cancelled');
+      } else {
+        print('Payment flow exited without explicit result');
       }
+
+      // if (selectedPaymentMethod == "Card") {
+      //   transactionId = await startCardPayment(
+      //     context: context,
+      //     amount: widget.amount.toString(),
+      //     currency: "USD",
+      //   );
+      // } else if (selectedPaymentMethod == "Google") {
+      //   transactionId = await startGooglePay(
+      //     context: context,
+      //     paymentCurrency: "USD",
+      //     amount: widget.amount.toString(),
+      //     merchantName: 'Your Merchant Name',
+      //     merchantCountryCode: 'US',
+      //     matchentCurrencyCode: 'USD',
+      //   );
+      // } else {
+      //   // In your button press or wherever you want to start payment
+      //   final result = await Navigator.of(context).push(
+      //     MaterialPageRoute(
+      //       builder:
+      //           (_) => PayDunyaPaymentPage(
+      //             amount: widget.amount.toDouble(),
+      //             description: 'Test Payment',
+      //             customerName: 'John Doe',
+      //             customerEmail: 'john@example.com',
+      //             customerPhone: '771111111',
+      //           ),
+      //     ),
+      //   );
+
+      //   if (result != null && result['status'] == 'success') {
+      //     transactionId = result['transactionId'];
+      //   } else if (result != null && result['status'] == 'cancelled') {
+      //     print('Payment cancelled');
+      //   } else {
+      //     print('Payment flow exited without explicit result');
+      //   }
+      // }
 
       if (transactionId == null) {
         // Payment failed or cancelled, stop here
@@ -274,7 +300,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 .toList(),
         "amount": widget.amount,
         "transactionId": transactionId,
-        "paymentMethod": selectedPaymentMethod,
+        "paymentMethod": "selectedPaymentMethod",
       };
 
       final ticketService = TicketService();
@@ -287,7 +313,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
           backgroundColor: Colors.green,
         );
         Get.to(
-          () => CongratulationTicketPunchedScreen(tcketData: response.data,event:widget.event),
+          () => CongratulationTicketPunchedScreen(
+            tcketData: response.data,
+            event: widget.event,
+          ),
         );
       } else {
         commonSnackbar(
@@ -307,22 +336,22 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
   }
 
-  String _getPaymentIcon(String method) {
-    switch (method) {
-      case 'Wave':
-        return 'assets/images/Payment-Wave.png';
-      case 'OrangeMoney':
-        return 'assets/images/Payment-Orange money.png';
-      case 'Apple':
-        return 'assets/images/Payment-ApplePay.png';
-      case 'Google':
-        return 'assets/images/Payment-GooglePay.png';
-      case 'Card':
-        return 'assets/images/Payment-Add Card.png';
-      default:
-        return 'assets/images/Payment-Add Card.png';
-    }
-  }
+  // String _getPaymentIcon(String method) {
+  //   switch (method) {
+  //     case 'Wave':
+  //       return 'assets/images/Payment-Wave.png';
+  //     case 'OrangeMoney':
+  //       return 'assets/images/Payment-Orange money.png';
+  //     case 'Apple':
+  //       return 'assets/images/Payment-ApplePay.png';
+  //     case 'Google':
+  //       return 'assets/images/Payment-GooglePay.png';
+  //     case 'Card':
+  //       return 'assets/images/Payment-Add Card.png';
+  //     default:
+  //       return 'assets/images/Payment-Add Card.png';
+  //   }
+  // }
 }
 
 class PaymentButton extends StatelessWidget {

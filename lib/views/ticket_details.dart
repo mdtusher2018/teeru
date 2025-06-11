@@ -38,6 +38,24 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
     };
   }
 
+  List<Map<String, dynamic>> get items {
+    List<Map<String, dynamic>> result = [];
+
+    quantities.forEach((key, quantity) {
+      if (quantity > 0) {
+        int unitPrice = prices[key] ?? 0;
+        result.add({
+          'name': key,
+          'quantity': quantity,
+          'unit_price': unitPrice,
+          'total_price': unitPrice * quantity,
+        });
+      }
+    });
+
+    return result;
+  }
+
   int get subtotal {
     int total = 0;
     quantities.forEach((key, qty) {
@@ -284,6 +302,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                       event: event,
                       amount: totalPrice,
                       quantities: quantities,
+                      iteams: items,
                     ),
                   );
                 } else {

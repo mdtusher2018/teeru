@@ -220,7 +220,7 @@ class EditProfileScreen extends StatelessWidget {
                         child: IconButton(
                           icon: const Icon(
                             Icons.camera_alt_outlined,
-                            color: Colors.yellow,
+                            color: AppColors.buttonColor,
                           ),
                           onPressed: controller.pickCoverImage,
                         ),
@@ -237,7 +237,7 @@ class EditProfileScreen extends StatelessWidget {
                             children: [
                               CircleAvatar(
                                 radius: 53,
-                                backgroundColor: AppColors.yellow,
+                                backgroundColor: AppColors.buttonColor,
                                 child: CircleAvatar(
                                   radius: 50,
                                   backgroundImage:
@@ -266,7 +266,7 @@ class EditProfileScreen extends StatelessWidget {
                                     width: 32,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      color: AppColors.yellow,
+                                      color: AppColors.buttonColor,
                                       shape: BoxShape.circle,
                                     ),
                                     child: const Icon(

@@ -88,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
                           const SizedBox(height: 70),
                           CircleAvatar(
                             radius: 53,
-                            backgroundColor: AppColors.primaryColor,
+                            backgroundColor: AppColors.buttonColor,
                             child: CircleAvatar(
                               radius: 50,
                               backgroundImage:
@@ -165,7 +165,7 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildMenuItem(String icon, String title, VoidCallback onTap) {
     return ListTile(
-      leading: Image.asset(icon, color: AppColors.primaryColor),
+      leading: Image.asset(icon, color: AppColors.buttonColor),
       title: commonText(title, size: 16),
       trailing: const Icon(
         Icons.arrow_forward_ios,

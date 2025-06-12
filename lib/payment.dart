@@ -11,15 +11,18 @@ class PayDunyaPaymentPage extends StatefulWidget {
   final String description;
   final String customerName;
   final String customerEmail;
+  final List<Map<String, dynamic>> iteams;
   final String customerPhone;
 
   const PayDunyaPaymentPage({
     Key? key,
     required this.amount,
+
     required this.description,
     required this.customerName,
     required this.customerEmail,
     required this.customerPhone,
+    required this.iteams,
   }) : super(key: key);
 
   @override
@@ -44,9 +47,9 @@ class _PayDunyaPaymentPageState extends State<PayDunyaPaymentPage> {
         ),
         headers: {
           'Content-Type': 'application/json',
-          'PAYDUNYA-MASTER-KEY': 'UGxLuI18-F4vy-94iW-MTR0-rdvBhzHP8njr',
-          'PAYDUNYA-PRIVATE-KEY': 'test_private_clJv8fVNZA2jvkJyBkTjxTLyjjk',
-          'PAYDUNYA-TOKEN': 'L4SQORz9g3TX9EtsQbJo',
+          'PAYDUNYA-MASTER-KEY': 'E85ehlMB-YnKq-cJ3h-rFiz-FXrZEmLiBN8e',
+          'PAYDUNYA-PRIVATE-KEY': 'test_private_7mw0PskYwDRVbxCWY1y0qdfL5Jv',
+          'PAYDUNYA-TOKEN': 'bOX44IY9joN7pZO2WKA2',
         },
         body: jsonEncode({
           'invoice': {
@@ -57,9 +60,12 @@ class _PayDunyaPaymentPageState extends State<PayDunyaPaymentPage> {
               'email': widget.customerEmail,
               'phone': widget.customerPhone,
             },
+            "items": widget.iteams,
+            "store": {"name": "Teeru"},
+
             "channels": ["card", "mtn-benin", "orange-money-senegal", "wave"],
           },
-          'store': {'name': 'Test Store'},
+          'store': {'name': 'Teeru'},
           'actions': {
             // Custom scheme URLs to detect inside the WebView
             'return_url': 'myapp://payment-success',

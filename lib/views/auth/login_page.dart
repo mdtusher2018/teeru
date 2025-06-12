@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: commonText(
                         "Forgot password?".tr,
                         size: 12,
-                        color: AppColors.primaryColor,
+                        color: AppColors.buttonColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: commonText(
                           "Let’s get started".tr,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primaryColor,
+                          color: AppColors.buttonColor,
                         ),
                       ),
                       GestureDetector(
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: commonText(
                           "Continue as guest".tr,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green.shade700,
+                          color: AppColors.buttonColor,
                         ),
                       ),
                     ],

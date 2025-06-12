@@ -19,6 +19,7 @@ class MyTicketsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    myTicketsController.fetchUserTickets();
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       appBar: commonAppBar(

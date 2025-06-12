@@ -45,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                 commonButton(
                   "Go to Login".tr,
                   onTap: () {
-                    Get.to(LoginScreen());
+                    Get.offAll(LoginScreen());
                   },
                 ),
               ],
@@ -152,7 +152,7 @@ class ProfileScreen extends StatelessWidget {
                     LocalStorageService _localStorageService =
                         LocalStorageService();
                     _localStorageService.removeToken();
-                    Get.to(LoginScreen());
+                    Get.offAll(LoginScreen());
                   },
                 ),
               ],

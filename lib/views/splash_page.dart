@@ -26,9 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
     // Navigate to onboarding after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (token != null && token.isNotEmpty) {
-        Get.to(RootPage());
+        Get.off(RootPage(), transition: Transition.rightToLeft);
       } else {
-        Get.to(LoginScreen());
+        Get.off(LoginScreen(), transition: Transition.rightToLeft);
       }
     });
   }

@@ -91,6 +91,8 @@ class SportsPage extends StatelessWidget {
                   ? Center(child: CircularProgressIndicator())
                   : Container(
                     height: 220,
+                    padding: const EdgeInsets.all(24.0),
+                    margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       image: DecorationImage(
@@ -102,16 +104,14 @@ class SportsPage extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(24.0),
-                              child: InkWell(
-                                onTap: () {
-                                  Get.back();
-                                },
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: AppColors.white,
-                                ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Icon(
+                                Icons.arrow_back,
+
+                                color: AppColors.white,
                               ),
                             ),
                           ],
@@ -128,22 +128,34 @@ class SportsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 12),
-                    Divider(color: AppColors.black),
+                    if (!controller.isLoading.value)
+                      Divider(color: AppColors.black),
+                    (controller.isLoading.value)
+                        ? Center(child: CircularProgressIndicator())
+                        : (controller.events.isEmpty)
+                        ? Center(
+                          child: commonText(
+                            "No events available".tr,
+                            size: 21,
+                            isBold: true,
+                          ),
+                        )
+                        : ListView.separated(
+                          padding: EdgeInsets.all(8),
+                          itemCount: controller.events.length,
+                          separatorBuilder:
+                              (context, index) =>
+                                  Divider(color: AppColors.black),
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            final event = controller.events[index];
+                            return EventCard(event);
+                          },
+                        ),
 
-                    ListView.separated(
-                      padding: EdgeInsets.all(8),
-                      itemCount: controller.events.length,
-                      separatorBuilder:
-                          (context, index) => Divider(color: AppColors.black),
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final event = controller.events[index];
-                        return EventCard(event);
-                      },
-                    ),
-
-                    Divider(color: AppColors.black),
+                    if (!controller.isLoading.value)
+                      Divider(color: AppColors.black),
                   ],
                 ),
               );

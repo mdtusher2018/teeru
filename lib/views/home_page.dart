@@ -162,15 +162,22 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              if (controller.upcomingEvents.isNotEmpty)
-                Padding(
+              Obx(() {
+                return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
-                      commonText("Upcoming Events".tr, size: 16, isBold: true),
+                      commonText(
+                        (controller.upcomingEvents.isNotEmpty)
+                            ? "Upcoming Events".tr
+                            : "",
+                        size: 16,
+                        isBold: true,
+                      ),
                     ],
                   ),
-                ),
+                );
+              }),
 
               // ListView.separated(
               //   separatorBuilder: (context, index) {
@@ -260,7 +267,7 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(16),
           image: DecorationImage(
             image: NetworkImage(
-              getFullImageUrl(event.category.image),
+              getFullImageUrl(event.image),
               // "https://c7.alamy.com/comp/BX8G0R/he-italy-u-20-national-team-lines-up-prior-to-the-start-of-a-fifa-BX8G0R.jpg",
             ),
             fit: BoxFit.cover,
@@ -314,9 +321,9 @@ class _HomePageState extends State<HomePage> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    commonText("Time: ${event.time}", color: AppColors.white),
+                    commonText(event.headToHead, color: AppColors.white),
                     commonText(
-                      "Date: ${event.date.toLocal().toString().split(' ')[0]}",
+                      "${event.time}  ${event.date.toLocal().toString().split(' ')[0]}",
                       color: AppColors.white,
                     ),
                   ],

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
 
       translations: AppTranslations(), // <-- Add this
-      locale: const Locale('fr', 'FR'), // default language
+      locale: const Locale('en', 'US'), // default language
       fallbackLocale: const Locale('en', 'US'), // fallback if wrong locale
 
       theme: ThemeData(

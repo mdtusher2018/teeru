@@ -53,6 +53,18 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
       }
     });
 
+    result.add({
+      'name': 'Service Fee',
+      'quantity': totalPrice,
+      'unit_price': widget.event.ticketPrices.serviceFee / 100,
+      "total_price": serviceFeeAmount,
+    });
+    result.add({
+      'name': 'Processing Fee',
+      'quantity': totalPrice,
+      'unit_price': widget.event.ticketPrices.processingFee / 100,
+      "total_price": processingFeeAmount,
+    });
     return result;
   }
 
@@ -96,7 +108,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                 image: DecorationImage(
                   image: NetworkImage(
                     // prepend your base url here if needed
-                    getFullImageUrl(event.category.image),
+                    getFullImageUrl(event.image),
                   ),
                   fit: BoxFit.cover,
                 ),

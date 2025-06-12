@@ -69,7 +69,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
-                          getFullImageUrl(widget.event.category.image),
+                          getFullImageUrl(widget.event.image),
                           height: 80,
                           width: 80,
                           fit: BoxFit.cover,
@@ -144,7 +144,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
               //   child: commonText("Payment Methods".tr, isBold: true, size: 16),
               // ),
               // const SizedBox(height: 12),
-
               // // Payment buttons dynamically with selection
               // Column(
               //   children:
@@ -276,7 +275,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
       //           ),
       //     ),
       //   );
-
       //   if (result != null && result['status'] == 'success') {
       //     transactionId = result['transactionId'];
       //   } else if (result != null && result['status'] == 'cancelled') {
@@ -300,7 +298,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 .toList(),
         "amount": widget.amount,
         "transactionId": transactionId,
-        "paymentMethod": "selectedPaymentMethod",
+        "paymentMethod": "Wave",
       };
 
       final ticketService = TicketService();

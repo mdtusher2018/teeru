@@ -55,9 +55,7 @@ class MyTicketsScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: _buildTicketCard(
                     context,
-                    image: getFullImageUrl(
-                      event.category.image,
-                    ), // Adjust URL as needed
+                    image: getFullImageUrl(event.image), // Adjust URL as needed
                     title: event.name,
                     seat: ticket.tickets
                         .where((e) => e.seat > 0) // only seats > 0

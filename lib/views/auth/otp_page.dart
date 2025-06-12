@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/controllers/otp_verification_controller.dart';
-import 'package:trreu/views/auth/forget_password.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
@@ -80,7 +79,7 @@ class OTPScreen extends StatelessWidget {
                     commonText("Didn’t get the code?".tr, isBold: true),
                     GestureDetector(
                       onTap: () {
-                        Get.to(ForgetPasswordScreen());
+                        Get.back();
                       },
                       child: commonText(
                         "Resend".tr,

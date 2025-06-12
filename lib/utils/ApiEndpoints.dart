@@ -26,6 +26,7 @@ class ApiEndpoints {
   static const String contactUs = 'settings/contactUs';
 
   // Event endpoints
+  static const String allEvents = "event/all";
   static const String category = 'category';
   static const String specificCategoryEvent = 'event/speceficCategoryEvent/';
   static const String eventById = 'event/'; // Append event id dynamically

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/views/colors.dart';
-import 'package:trreu/views/home_page.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
+import 'package:trreu/views/root_page.dart';
 
 class TicketScreen extends StatelessWidget {
   const TicketScreen({super.key});
@@ -31,7 +31,8 @@ class TicketScreen extends StatelessWidget {
             commonButton(
               "Discover Events".tr,
               onTap: () {
-                Get.to(HomePage());
+                RootPage.currentIndex = 0;
+                Get.offAll(() => RootPage());
               },
             ),
             Spacer(),

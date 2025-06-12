@@ -71,11 +71,4 @@ class LoginController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-  }
 }

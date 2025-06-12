@@ -1,3 +1,4 @@
+import 'package:trreu/models/all_event_model.dart';
 import 'package:trreu/models/category_model.dart';
 import 'package:trreu/models/specific_category_events_model.dart';
 import 'package:trreu/models/upcoming_events_model.dart';
@@ -23,5 +24,10 @@ class EventService {
     final endpoint = '${ApiEndpoints.specificCategoryEvent}$categoryId';
     final response = await _apiService.get(endpoint);
     return SpecificCategoryEventsResponse.fromJson(response);
+  }
+
+  Future<AllEventsModel> fetchAllEvents() async {
+    final response = await _apiService.get(ApiEndpoints.allEvents);
+    return AllEventsModel.fromJson(response);
   }
 }

@@ -136,14 +136,4 @@ class SignUpController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  @override
-  void onClose() {
-    fullNameController.dispose();
-    emailController.dispose();
-    phoneNumberController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    super.onClose();
-  }
 }

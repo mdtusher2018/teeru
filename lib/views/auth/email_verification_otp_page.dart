@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/controllers/email_verified_otp_controller.dart';
-import 'package:trreu/views/auth/signup_page.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
@@ -75,7 +74,7 @@ class EmailVerifiedOTPScreen extends StatelessWidget {
                     commonText("Didn’t get the code?".tr, isBold: true),
                     GestureDetector(
                       onTap: () {
-                        Get.to(SignUpScreen());
+                        Get.back();
                       },
                       child: commonText(
                         "Resend".tr,

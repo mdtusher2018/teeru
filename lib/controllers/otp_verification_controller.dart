@@ -45,7 +45,7 @@ class OtpVerificationController extends GetxController {
         );
 
         // Navigate to Reset Password Screen with token
-        Get.to(() => PasswordChangedSuccessfullyScreen());
+        Get.offAll(() => PasswordChangedSuccessfullyScreen());
       } else {
         commonSnackbar(
           title: 'Failed',

@@ -26,7 +26,14 @@ class SignUpController extends GetxController {
   }
 
   bool _validate() {
-    if (fullNameController.text.trim().isEmpty) {
+    final fullName = fullNameController.text.trim();
+    final email = emailController.text.trim();
+    final phone = phoneNumberController.text.trim();
+    final password = passwordController.text.trim();
+    final confirmPassword = confirmPasswordController.text.trim();
+
+    // Full Name
+    if (fullName.isEmpty) {
       commonSnackbar(
         title: 'Validation Error',
         message: 'Full name is required',
@@ -35,16 +42,24 @@ class SignUpController extends GetxController {
       return false;
     }
 
-    if (emailController.text.trim().isEmpty) {
+    // Email Validation
+    if (email.isEmpty) {
       commonSnackbar(
         title: 'Validation Error',
         message: 'Email is required',
         backgroundColor: Colors.red,
       );
       return false;
+    } else if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(email)) {
+      commonSnackbar(
+        title: 'Validation Error',
+        message: 'Enter a valid email address',
+        backgroundColor: Colors.red,
+      );
+      return false;
     }
 
-    String phone = phoneNumberController.text.trim();
+    // Phone Number Validation
     if (phone.isEmpty) {
       commonSnackbar(
         title: 'Validation Error',
@@ -52,18 +67,17 @@ class SignUpController extends GetxController {
         backgroundColor: Colors.red,
       );
       return false;
-    }
-
-    if (phone.length < 10) {
+    } else if (!RegExp(r"^\d{10,15}$").hasMatch(phone)) {
       commonSnackbar(
         title: 'Validation Error',
-        message: 'Phone number must be at least 10 digits',
+        message: 'Phone number must contain 10–15 digits and only numbers',
         backgroundColor: Colors.red,
       );
       return false;
     }
 
-    if (passwordController.text.trim().isEmpty) {
+    // Password
+    if (password.isEmpty) {
       commonSnackbar(
         title: 'Validation Error',
         message: 'Password is required',
@@ -72,7 +86,8 @@ class SignUpController extends GetxController {
       return false;
     }
 
-    if (confirmPasswordController.text.trim().isEmpty) {
+    // Confirm Password
+    if (confirmPassword.isEmpty) {
       commonSnackbar(
         title: 'Validation Error',
         message: 'Confirm password is required',
@@ -81,8 +96,8 @@ class SignUpController extends GetxController {
       return false;
     }
 
-    if (passwordController.text.trim() !=
-        confirmPasswordController.text.trim()) {
+    // Password match
+    if (password != confirmPassword) {
       commonSnackbar(
         title: 'Validation Error',
         message: 'Passwords do not match',

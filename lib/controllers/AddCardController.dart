@@ -13,9 +13,14 @@ class AddCardController extends GetxController {
   final cvvController = TextEditingController();
 
   var isLoading = false.obs;
-
   bool _validate() {
-    if (cardHolderNameController.text.trim().isEmpty) {
+    final cardHolderName = cardHolderNameController.text.trim();
+    final cardNumber = cardNumberController.text.trim();
+    final expiry = expireController.text.trim();
+    final cvv = cvvController.text.trim();
+
+    // Cardholder Name: required
+    if (cardHolderName.isEmpty) {
       commonSnackbar(
         title: 'Validation Error',
         message: 'Cardholder name is required',
@@ -23,30 +28,62 @@ class AddCardController extends GetxController {
       );
       return false;
     }
-    if (cardNumberController.text.trim().isEmpty) {
+
+    // Card Number: must be 16 digits
+    if (cardNumber.isEmpty ||
+        cardNumber.length != 16 ||
+        !RegExp(r'^\d{16}$').hasMatch(cardNumber)) {
       commonSnackbar(
         title: 'Validation Error',
-        message: 'Card number is required',
+        message: 'Enter a valid 16-digit card number',
         backgroundColor: Colors.red,
       );
       return false;
     }
-    if (expireController.text.trim().isEmpty) {
+
+    // Expiry Date: must be in MM/YY format and in the future
+    if (!RegExp(r'^\d{2}/\d{2}$').hasMatch(expiry)) {
       commonSnackbar(
         title: 'Validation Error',
-        message: 'Expiry date is required',
+        message: 'Expiry date must be in MM/YY format',
+        backgroundColor: Colors.red,
+      );
+      return false;
+    } else {
+      final parts = expiry.split('/');
+      final month = int.tryParse(parts[0]) ?? 0;
+      final year = int.tryParse(parts[1]) ?? 0;
+      if (month < 1 || month > 12) {
+        commonSnackbar(
+          title: 'Validation Error',
+          message: 'Invalid expiry month',
+          backgroundColor: Colors.red,
+        );
+        return false;
+      }
+      final now = DateTime.now();
+      final fullYear = 2000 + year;
+      final expiryDate = DateTime(fullYear, month + 1);
+      if (expiryDate.isBefore(now)) {
+        commonSnackbar(
+          title: 'Validation Error',
+          message: 'Card has expired',
+          backgroundColor: Colors.red,
+        );
+        return false;
+      }
+    }
+
+    // CVV: must be 3 or 4 digits
+    if (cvv.isEmpty || !RegExp(r'^\d{3,4}$').hasMatch(cvv)) {
+      commonSnackbar(
+        title: 'Validation Error',
+        message: 'Enter a valid CVV (3 or 4 digits)',
         backgroundColor: Colors.red,
       );
       return false;
     }
-    if (cvvController.text.trim().isEmpty) {
-      commonSnackbar(
-        title: 'Validation Error',
-        message: 'CVV is required',
-        backgroundColor: Colors.red,
-      );
-      return false;
-    }
+
     return true;
   }
 
@@ -74,6 +111,10 @@ class AddCardController extends GetxController {
       final response = await _userService.addCard(request);
 
       if (response.success) {
+        cardHolderNameController.clear();
+        cardNumberController.clear();
+        expireController.clear();
+        cvvController.clear();
         Get.back();
         commonSnackbar(
           title: 'Success',

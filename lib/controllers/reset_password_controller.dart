@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/services/auth_service.dart';
+import 'package:trreu/views/auth/login_page.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
-import 'package:trreu/views/root_page.dart';
 
 class ResetPasswordController extends GetxController {
   final AuthService _authService = AuthService();
@@ -67,7 +67,7 @@ class ResetPasswordController extends GetxController {
         );
 
         // Navigate to home or login after success
-        Get.offAll(() => RootPage());
+        Get.offAll(() => LoginScreen());
       } else {
         commonSnackbar(
           title: 'Failed',

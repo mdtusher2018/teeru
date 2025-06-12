@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -41,15 +42,19 @@ class _PayDunyaPaymentPageState extends State<PayDunyaPaymentPage> {
 
   Future<void> createInvoice() async {
     try {
+      final masterKey = dotenv.env['PAYDUNYA_MASTER_KEY'];
+      final privateKey = dotenv.env['PAYDUNYA_PRIVATE_KEY'];
+      final token = dotenv.env['PAYDUNYA_TOKEN'];
+
       final response = await http.post(
         Uri.parse(
           'https://app.paydunya.com/sandbox-api/v1/checkout-invoice/create',
         ),
         headers: {
           'Content-Type': 'application/json',
-          'PAYDUNYA-MASTER-KEY': 'E85ehlMB-YnKq-cJ3h-rFiz-FXrZEmLiBN8e',
-          'PAYDUNYA-PRIVATE-KEY': 'test_private_7mw0PskYwDRVbxCWY1y0qdfL5Jv',
-          'PAYDUNYA-TOKEN': 'bOX44IY9joN7pZO2WKA2',
+          'PAYDUNYA-MASTER-KEY': masterKey!,
+          'PAYDUNYA-PRIVATE-KEY': privateKey!,
+          'PAYDUNYA-TOKEN': token!,
         },
         body: jsonEncode({
           'invoice': {

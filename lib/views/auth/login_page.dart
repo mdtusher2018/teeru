@@ -160,7 +160,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => RootPage());
+                          RootPage.currentIndex = 0;
+                          Get.offAll(() => RootPage());
                         },
                         child: commonText(
                           "Continue as guest".tr,

@@ -9,6 +9,8 @@ class Event {
   final bool isDeleted;
   final String createdAt;
   final String updatedAt;
+  final String image;
+  final String headToHead;
 
   Event({
     required this.id,
@@ -21,6 +23,8 @@ class Event {
     required this.isDeleted,
     required this.createdAt,
     required this.updatedAt,
+    required this.image,
+    required this.headToHead,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
@@ -35,6 +39,8 @@ class Event {
       isDeleted: json['isDeleted'] ?? false,
       createdAt: json['createdAt'] ?? '',
       updatedAt: json['updatedAt'] ?? '',
+      image: json['image'] ?? '',
+      headToHead: json['head_to_head'] ?? '',
     );
   }
 }

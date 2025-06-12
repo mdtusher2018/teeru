@@ -19,7 +19,7 @@ class _SignUpSplashScreenState extends State<SignUpSplashScreen> {
 
     // Navigate to onboarding after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
-      Get.to(LoginScreen());
+      Get.offAll(LoginScreen());
     });
   }
 

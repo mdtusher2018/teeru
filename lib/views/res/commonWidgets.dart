@@ -53,6 +53,7 @@ Widget commonTextfield(
   String hintText = "",
   bool isBold = true,
   bool issuffixIconVisible = false,
+  Function(String)? onChanged,
   bool isPasswordVisible = false,
   enable,
   prefixIcon,
@@ -83,6 +84,7 @@ Widget commonTextfield(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: TextFormField(
+            onChanged: onChanged,
             controller: controller,
             enabled: enable,
             focusNode: focusNode,

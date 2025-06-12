@@ -11,8 +11,8 @@ class LoginController extends GetxController {
   final AuthService _authService = AuthService();
   final LocalStorageService _localStorageService = LocalStorageService();
 
-  final emailController = TextEditingController(text: "user9@gmail.com");
-  final passwordController = TextEditingController(text: "123456");
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   var isLoading = false.obs;
   var emailError = ''.obs;
@@ -70,12 +70,5 @@ class LoginController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
   }
 }

@@ -44,10 +44,20 @@ class SignUpController extends GetxController {
       return false;
     }
 
-    if (phoneNumberController.text.trim().isEmpty) {
+    String phone = phoneNumberController.text.trim();
+    if (phone.isEmpty) {
       commonSnackbar(
         title: 'Validation Error',
         message: 'Phone number is required',
+        backgroundColor: Colors.red,
+      );
+      return false;
+    }
+
+    if (phone.length < 10) {
+      commonSnackbar(
+        title: 'Validation Error',
+        message: 'Phone number must be at least 10 digits',
         backgroundColor: Colors.red,
       );
       return false;
@@ -125,15 +135,5 @@ class SignUpController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  @override
-  void onClose() {
-    fullNameController.dispose();
-    emailController.dispose();
-    phoneNumberController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    super.onClose();
   }
 }

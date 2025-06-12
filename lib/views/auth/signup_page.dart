@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/controllers/signup_controller.dart';
-import 'package:trreu/views/auth/login_page.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/res/commonWidgets.dart';
 
@@ -157,20 +156,25 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     commonText('Already have a Teeru account?'.tr, size: 14),
                     GestureDetector(
-                      onTap: () => Get.to(() => LoginScreen()),
+                      onTap: () => Navigator.pop(context),
                       child: commonText(
                         'Log In'.tr,
                         isBold: true,
                         size: 14,
-                        color: AppColors.primaryColor,
+                        color: AppColors.buttonColor,
                       ),
                     ),
-                    const Spacer(),
-                    commonText(
-                      'Cancel'.tr,
-                      size: 14,
-                      color: AppColors.primaryColor,
-                      isBold: true,
+
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: commonText(
+                        'Cancel'.tr,
+                        size: 14,
+                        color: AppColors.buttonColor,
+                        isBold: true,
+                      ),
                     ),
                   ],
                 ),

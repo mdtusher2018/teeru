@@ -204,11 +204,18 @@ class EditProfileScreen extends StatelessWidget {
                                   ? FileImage(controller.coverImage.value!)
                                   : NetworkImage(
                                         getFullImageUrl(
-                                          controller
-                                              .controller
-                                              .userProfile
-                                              .value!
-                                              .coverImage,
+                                          (controller
+                                                  .controller
+                                                  .userProfile
+                                                  .value!
+                                                  .coverImage
+                                                  .isNotEmpty)
+                                              ? controller
+                                                  .controller
+                                                  .userProfile
+                                                  .value!
+                                                  .coverImage
+                                              : "https://assets.turfonline.co.uk/2019/04/sedum-groundcover-816x288.jpg",
                                         ),
                                       )
                                       as ImageProvider,
@@ -247,11 +254,18 @@ class EditProfileScreen extends StatelessWidget {
                                           )
                                           : NetworkImage(
                                                 getFullImageUrl(
-                                                  controller
-                                                      .controller
-                                                      .userProfile
-                                                      .value!
-                                                      .profileImage,
+                                                  (controller
+                                                          .controller
+                                                          .userProfile
+                                                          .value!
+                                                          .profileImage
+                                                          .isNotEmpty)
+                                                      ? controller
+                                                          .controller
+                                                          .userProfile
+                                                          .value!
+                                                          .profileImage
+                                                      : "https://www.earth.com/assets/_next/image/?url=https%3A%2F%2Fcff2.earth.com%2Fuploads%2F2023%2F08%2F26042949%2FNational-Dog-Day--1400x850.jpg&w=1200&q=75",
                                                 ),
                                               )
                                               as ImageProvider,

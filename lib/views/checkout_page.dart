@@ -179,7 +179,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         text: "Terms of Use".tr,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primaryColor,
+                          color: AppColors.buttonColor,
                         ),
                       ),
                       TextSpan(text: " and ".tr),
@@ -187,7 +187,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         text: "Privacy Policy.".tr,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primaryColor,
+                          color: AppColors.buttonColor,
                         ),
                       ),
                       TextSpan(

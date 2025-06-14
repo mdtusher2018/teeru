@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:trreu/AppTranslations.dart';
@@ -9,6 +10,7 @@ import 'payment/keys.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   Stripe.publishableKey = publishableKey;
   await Stripe.instance.applySettings();
   runApp(const MyApp());

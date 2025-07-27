@@ -1,6 +1,6 @@
 class ApiEndpoints {
-  static const String baseUrl = 'http://147.93.29.184:4010/api/v1/';
-  static const String baseImageUrl = 'http://147.93.29.184:4010';
+  static const String baseUrl = 'https://api.teerusn.com/api/v1/';
+  static const String baseImageUrl = 'https://api.teerusn.com';
 
   // Users
   static const String createUser = 'users/create';

@@ -24,10 +24,10 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
   void initState() {
     super.initState();
     prices = {
-      'Tribune': widget.event.ticketPrices.tribune.toInt(),
-      'Annexe Loge': widget.event.ticketPrices.annexeLoge.toInt(),
-      'Loge VIP': widget.event.ticketPrices.logeVIP.toInt(),
-      'Loge VVIP': widget.event.ticketPrices.logeVVIP.toInt(),
+      'Tribune': widget.event.ticketPrices.tribune.price.toInt(),
+      'Annexe Loge': widget.event.ticketPrices.annexeLoge.price.toInt(),
+      'Loge VIP': widget.event.ticketPrices.logeVIP.price.toInt(),
+      'Loge VVIP': widget.event.ticketPrices.logeVVIP.price.toInt(),
     };
 
     quantities = {
@@ -53,18 +53,18 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
       }
     });
 
-    result.add({
-      'name': 'Service Fee',
-      'quantity': totalPrice,
-      'unit_price': widget.event.ticketPrices.serviceFee / 100,
-      "total_price": serviceFeeAmount,
-    });
-    result.add({
-      'name': 'Processing Fee',
-      'quantity': totalPrice,
-      'unit_price': widget.event.ticketPrices.processingFee / 100,
-      "total_price": processingFeeAmount,
-    });
+    // result.add({
+    //   'name': 'Service Fee',
+    //   'quantity': totalPrice,
+    //   'unit_price': widget.event.ticketPrices.serviceFee / 100,
+    //   "total_price": serviceFeeAmount,
+    // });
+    // result.add({
+    //   'name': 'Processing Fee',
+    //   'quantity': totalPrice,
+    //   'unit_price': widget.event.ticketPrices.processingFee / 100,
+    //   "total_price": processingFeeAmount,
+    // });
     return result;
   }
 
@@ -76,13 +76,65 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
     return total;
   }
 
-  int get serviceFeeAmount {
-    return ((subtotal * widget.event.ticketPrices.serviceFee) / 100).round();
-  }
+  // int get serviceFeeAmount {
+  //   return ((subtotal * widget.event.ticketPrices.serviceFee) / 100).round();
+  // }
 
-  int get processingFeeAmount {
-    return ((subtotal * widget.event.ticketPrices.processingFee) / 100).round();
-  }
+  // int get processingFeeAmount {
+  //   return ((subtotal * widget.event.ticketPrices.processingFee) / 100).round();
+  // }
+
+
+int get serviceFeeAmount {
+  int total = 0;
+  quantities.forEach((key, qty) {
+    if (qty > 0) {
+      final int price = prices[key] ?? 0;
+      final double fee = () {
+        switch (key) {
+          case 'Tribune':
+            return widget.event.ticketPrices.tribune.serviceFee;
+          case 'Annexe Loge':
+            return widget.event.ticketPrices.annexeLoge.serviceFee;
+          case 'Loge VIP':
+            return widget.event.ticketPrices.logeVIP.serviceFee;
+          case 'Loge VVIP':
+            return widget.event.ticketPrices.logeVVIP.serviceFee;
+          default:
+            return 0.0;
+        }
+      }();
+      total += ((price * qty * fee) / 100).round();
+    }
+  });
+  return total;
+}
+
+int get processingFeeAmount {
+  int total = 0;
+  quantities.forEach((key, qty) {
+    if (qty > 0) {
+      final int price = prices[key] ?? 0;
+      final double fee = () {
+        switch (key) {
+          case 'Tribune':
+            return widget.event.ticketPrices.tribune.processingFee;
+          case 'Annexe Loge':
+            return widget.event.ticketPrices.annexeLoge.processingFee;
+          case 'Loge VIP':
+            return widget.event.ticketPrices.logeVIP.processingFee;
+          case 'Loge VVIP':
+            return widget.event.ticketPrices.logeVVIP.processingFee;
+          default:
+            return 0.0;
+        }
+      }();
+      total += ((price * qty * fee) / 100).round();
+    }
+  });
+  return total;
+}
+
 
   int get totalPrice {
     return subtotal + serviceFeeAmount + processingFeeAmount;
@@ -178,61 +230,95 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
               final price = prices[name] ?? 0;
               final count = entry.value;
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+  final TicketDetail ticketDetail = () {
+    switch (name) {
+      case 'Tribune':
+        return widget.event.ticketPrices.tribune;
+      case 'Annexe Loge':
+        return widget.event.ticketPrices.annexeLoge;
+      case 'Loge VIP':
+        return widget.event.ticketPrices.logeVIP;
+      case 'Loge VVIP':
+        return widget.event.ticketPrices.logeVVIP;
+      default:
+        return TicketDetail(price: 0, serviceFee: 0, processingFee: 0);
+    }
+  }();
+
+
+
+              return
+              (price<=0)? SizedBox():
+               Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Column(
                   children: [
-                    Expanded(child: commonText(name, size: 14, isBold: true)),
-                    Expanded(
-                      child: commonText(
-                        "$price FCFA",
-                        size: 14,
-                        color: AppColors.primaryColor,
-                      ),
-                    ),
-                    Container(
-                      height: 24,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          width: 1,
-                          color: AppColors.primaryColor,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(child: commonText(name, size: 14, isBold: true)),
+                        Expanded(
+                          child: commonText(
+                            "$price FCFA",
+                            size: 14,
+                            color: AppColors.primaryColor,
+                          ),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              if (quantities[name]! > 0) {
-                                setState(
-                                  () =>
-                                      quantities[name] = quantities[name]! - 1,
-                                );
-                              }
-                            },
-                            child: Icon(
-                              Icons.remove,
+                        Container(
+                          height: 24,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              width: 1,
                               color: AppColors.primaryColor,
                             ),
                           ),
-                          commonText(count.toString(), size: 14),
-                          InkWell(
-                            onTap: () {
-                              setState(
-                                () => quantities[name] = quantities[name]! + 1,
-                              );
-                            },
-                            child: Icon(
-                              Icons.add,
-                              color: AppColors.primaryColor,
-                            ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  if (quantities[name]! > 0) {
+                                    setState(
+                                      () =>
+                                          quantities[name] = quantities[name]! - 1,
+                                    );
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.remove,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                              commonText(count.toString(), size: 14),
+                              InkWell(
+                                onTap: () {
+                                  setState(
+                                    () => quantities[name] = quantities[name]! + 1,
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.add,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
+                   // Fees
+           if (count > 0) ...[
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 2.0),
+              child: commonText("Service Fee ${ticketDetail.serviceFee.toStringAsFixed(1)}%     Processing Fee ${ticketDetail.processingFee.toStringAsFixed(1)}%".tr, size: 12),
+            )),
+       
+        ],
                   ],
                 ),
               );
@@ -243,27 +329,27 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
             ),
 
             // Fees
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                commonText("Service Fee".tr, size: 14),
-                commonText(
-                  "${widget.event.ticketPrices.serviceFee} %",
-                  size: 14,
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     commonText("Service Fee".tr, size: 14),
+            //     commonText(
+            //       "${widget.event.ticketPrices.serviceFee} %",
+            //       size: 14,
+            //     ),
+            //   ],
+            // ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                commonText("Processing Fee".tr, size: 14),
-                commonText(
-                  "${widget.event.ticketPrices.processingFee} %",
-                  size: 14,
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     commonText("Processing Fee".tr, size: 14),
+            //     commonText(
+            //       "${widget.event.ticketPrices.processingFee} %",
+            //       size: 14,
+            //     ),
+            //   ],
+            // ),
 
             const SizedBox(height: 10),
 

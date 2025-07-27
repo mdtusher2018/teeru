@@ -74,34 +74,79 @@ class Category {
   }
 }
 
+// class TicketPrices {
+//   final double tribune;
+//   final double annexeLoge;
+//   final double logeVIP;
+//   final double logeVVIP;
+//   final double serviceFee;
+//   final double processingFee;
+//   TicketPrices({
+//     required this.tribune,
+//     required this.annexeLoge,
+//     required this.logeVIP,
+//     required this.logeVVIP,
+//     required this.serviceFee,
+//     required this.processingFee,
+//   });
+//   factory TicketPrices.fromJson(Map<String, dynamic> json) {
+//     return TicketPrices(
+//       tribune: (json['tribune']?.toDouble()) ?? 0.0,
+//       annexeLoge: (json['annexeLoge']?.toDouble()) ?? 0.0,
+//       logeVIP: (json['logeVIP']?.toDouble()) ?? 0.0,
+//       logeVVIP: (json['logeVVIP']?.toDouble()) ?? 0.0,
+//       serviceFee: (json['serviceFee']?.toDouble()) ?? 0.0,
+//       processingFee: (json['processingFee']?.toDouble()) ?? 0.0,
+//     );
+//   }
+// }
+
+
 class TicketPrices {
-  final double tribune;
-  final double annexeLoge;
-  final double logeVIP;
-  final double logeVVIP;
-  final double serviceFee;
-  final double processingFee;
+  final TicketDetail tribune;
+  final TicketDetail annexeLoge;
+  final TicketDetail logeVIP;
+  final TicketDetail logeVVIP;
 
   TicketPrices({
     required this.tribune,
     required this.annexeLoge,
     required this.logeVIP,
     required this.logeVVIP,
-    required this.serviceFee,
-    required this.processingFee,
   });
 
   factory TicketPrices.fromJson(Map<String, dynamic> json) {
     return TicketPrices(
-      tribune: (json['tribune']?.toDouble()) ?? 0.0,
-      annexeLoge: (json['annexeLoge']?.toDouble()) ?? 0.0,
-      logeVIP: (json['logeVIP']?.toDouble()) ?? 0.0,
-      logeVVIP: (json['logeVVIP']?.toDouble()) ?? 0.0,
-      serviceFee: (json['serviceFee']?.toDouble()) ?? 0.0,
-      processingFee: (json['processingFee']?.toDouble()) ?? 0.0,
+      tribune: TicketDetail.fromJson(json['tribune'] ?? {}),
+      annexeLoge: TicketDetail.fromJson(json['annexeLoge'] ?? {}),
+      logeVIP: TicketDetail.fromJson(json['logeVIP'] ?? {}),
+      logeVVIP: TicketDetail.fromJson(json['logeVVIP'] ?? {}),
     );
   }
 }
+
+
+class TicketDetail {
+  final double price;
+  final double serviceFee;
+  final double processingFee;
+
+  TicketDetail({
+    required this.price,
+    required this.serviceFee,
+    required this.processingFee,
+  });
+
+  factory TicketDetail.fromJson(Map<String, dynamic> json) {
+    return TicketDetail(
+      price: (json['price'] ?? 0).toDouble(),
+      serviceFee: (json['serviceFee'] ?? 0).toDouble(),
+      processingFee: (json['processingFee'] ?? 0).toDouble(),
+    );
+  }
+}
+
+
 
 class PaginationMeta {
   final int page;

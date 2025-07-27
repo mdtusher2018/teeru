@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trreu/models/common_model.dart';
@@ -23,7 +25,9 @@ class HomeController extends GetxController {
     try {
       isLoadingCategories.value = true;
       final response = await _eventService.fetchCategories();
-      categories.value = response.data.result;
+      // categories.value = response.data.result;
+categories.addAll(response.data.result);
+      log(response.data.result.length.toString());
     } catch (e) {
       debugPrint('Error fetching categories: $e');
     } finally {

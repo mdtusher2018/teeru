@@ -138,28 +138,34 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 16),
 
               // Infinite Scroll Banner
-              Container(
-                height: 40,
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: AppColors.yellow,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                width: MediaQuery.sizeOf(context).width * 0.9,
-                child: Marquee(
-                  text: 'Follow sur Instragram @TeeruApp.'.tr,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  scrollAxis: Axis.horizontal,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  blankSpace: 20.0,
-                  velocity: 50.0,
-                  pauseAfterRound: Duration(seconds: 0),
-                  startPadding: 10.0,
-
-                  accelerationCurve: Curves.linear,
-                  decelerationDuration: Duration.zero,
-                  decelerationCurve: Curves.linear,
-                ),
+              Obx(
+                 () {
+                  return Container(
+                    height: 40,
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppColors.yellow,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    width: MediaQuery.sizeOf(context).width * 0.9,
+                    child: Marquee(
+                      text: controller.slidingText.value.isNotEmpty
+                          ? controller.slidingText.value
+                          : "Follow sur Instragram @TeeruApp.",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      scrollAxis: Axis.horizontal,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      blankSpace: 20.0,
+                      velocity: 50.0,
+                      pauseAfterRound: Duration(seconds: 0),
+                      startPadding: 10.0,
+                  
+                      accelerationCurve: Curves.linear,
+                      decelerationDuration: Duration.zero,
+                      decelerationCurve: Curves.linear,
+                    ),
+                  );
+                }
               ),
 
               Obx(() {

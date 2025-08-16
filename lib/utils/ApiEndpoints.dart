@@ -35,4 +35,6 @@ class ApiEndpoints {
   // Ticket endpoints
   static const String myTickets = 'ticket/myTickets';
   static const String buyTicket = 'ticket/buy';
+
+  static const String slidingText="slidingText";
 }

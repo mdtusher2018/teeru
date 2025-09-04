@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:trreu/AppTranslations.dart';
+import 'package:trreu/utils/permission_handeler.dart';
 import 'package:trreu/views/colors.dart';
 import 'package:trreu/views/splash_page.dart';
 
@@ -13,6 +14,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   Stripe.publishableKey = publishableKey;
   await Stripe.instance.applySettings();
+  requestLocationPermission();
   runApp(const MyApp());
 }
 

@@ -67,6 +67,47 @@ class EmailVerifiedOtpController extends GetxController {
     }
   }
 
+
+
+
+  Future<void> resendOTP() async {
+    try {
+      isLoading.value = true;
+
+      log("resend");
+
+      final response = await _authService.resendOtp();
+
+      if (response) {
+        commonSnackbar(
+          title: 'Success',
+          message: "OTP Send Sucessfully",
+          backgroundColor: Colors.green,
+        );
+    
+      } else {
+        commonSnackbar(
+          title: 'Failed',
+          message: "OTP couldn't send. Try again letter",
+          backgroundColor: Colors.red,
+        );
+      }
+    } catch (e) {
+      commonSnackbar(
+        title: 'Error',
+        message: e.toString(),
+        backgroundColor: Colors.red,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
+
+
+
+
   @override
   void onClose() {
     for (var controller in otpControllers) {

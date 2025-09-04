@@ -74,7 +74,7 @@ class EmailVerifiedOTPScreen extends StatelessWidget {
                     commonText("Didn’t get the code?".tr, isBold: true),
                     GestureDetector(
                       onTap: () {
-                        Get.back();
+                        controller.resendOTP();
                       },
                       child: commonText(
                         "Resend".tr,

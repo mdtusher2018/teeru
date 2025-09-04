@@ -13,15 +13,18 @@ class SportsController extends GetxController {
   var events = <Event>[].obs;
 
   final String categoryId;
+  String recivedCategoryImage;
   RxString categoryImage =
       "https://upload.wikimedia.org/wikipedia/commons/8/8d/Lutte_s%C3%A9n%C3%A9galaise_Bercy_2013_-_Mame_Balla-Pape_Mor_L%C3%B4_-_32.jpg"
           .obs;
-  SportsController(this.categoryId);
+  SportsController(this.categoryId,{required this.recivedCategoryImage});
 
   @override
   void onInit() {
     super.onInit();
+    categoryImage.value=recivedCategoryImage;
     fetchEvents();
+    
   }
 
   Future<void> fetchEvents() async {

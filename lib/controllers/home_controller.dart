@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:trreu/models/common_model.dart';
 import 'package:trreu/services/ads_service.dart';
 import 'package:trreu/services/event_and_category_service.dart';
+import 'package:geolocator/geolocator.dart'; // 👈 add this
 
 class HomeController extends GetxController {
   final EventService _eventService = EventService();
@@ -17,13 +19,40 @@ class HomeController extends GetxController {
 
   var categories = <Category>[].obs;
   var upcomingEvents = <Event>[].obs;
+  var address = 'Thies, SN'.obs;
 
   @override
   void onInit() {
     super.onInit();
+        fetchCurrentAddress(); 
     fetchCategories();
     fetchUpcomingEvents();
     fetchSlidingText();
+  }
+
+
+
+  Future<void> fetchCurrentAddress() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition();
+
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks.first;
+        address.value =
+            "${place.administrativeArea}, ${place.country}";
+        log("User Address: ${address.value}");
+      } else {
+        address.value = "Address not found";
+      }
+    } catch (e) {
+      debugPrint("Error fetching address: $e");
+      address.value = "Thies, SN";
+    }
   }
 
   fetchSlidingText() async {
@@ -55,8 +84,12 @@ categories.addAll(response.data.result);
 
   Future<void> fetchUpcomingEvents() async {
     try {
+      log(">>>>>>>>>>>>>>>>location");
+         // 👇 Get current location before API call
+      Position position = await Geolocator.getCurrentPosition();
+      log(position.longitude.toString()+">>>>>>>>>>>>>>>>location");
       isLoadingEvents.value = true;
-      final response = await _eventService.fetchUpcomingEvents();
+      final response = await _eventService.fetchUpcomingEvents(position.longitude,position.latitude);
       upcomingEvents.value = response.data;
     } catch (e) {
       debugPrint('Error fetching upcoming events: $e');

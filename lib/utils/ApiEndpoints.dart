@@ -1,7 +1,9 @@
 class ApiEndpoints {
-  static const String baseUrl = 'https://api.teerusn.com/api/v1/';
-  static const String baseImageUrl = 'https://api.teerusn.com';
+  // static const String baseUrl = 'https://api.teerusn.com/api/v1/';
+  // static const String baseImageUrl = 'https://api.teerusn.com';
 
+  static const String baseUrl = 'http://10.10.10.32:4010/api/v1/';
+  static const String baseImageUrl = 'http://10.10.10.32:4010';
   // Users
   static const String createUser = 'users/create';
   static const String createUserVerifyOtp = 'users/create-user-verify-otp';
@@ -18,6 +20,7 @@ class ApiEndpoints {
   static const String forgotPasswordOtpMatch = 'auth/forgot-password-otp-match';
   static const String forgotPasswordReset = 'auth/forgot-password-reset';
   static const String changePassword = 'auth/change-password';
+  static const String resendOtp='/otp/resend-otp';
 
   // Review
   static const String addReview = 'review/add';
@@ -30,7 +33,13 @@ class ApiEndpoints {
   static const String category = 'category';
   static const String specificCategoryEvent = 'event/speceficCategoryEvent/';
   static const String eventById = 'event/'; // Append event id dynamically
-  static const String upcomingEvents = 'event/upcoming';
+  static String upcomingEvents(double? longitude, double? latitude) {
+  if (longitude == null || latitude == null) {
+    return 'event/upcoming';
+  }
+  return 'event/upcoming?longitude=$longitude&latitude=$latitude';
+}
+
 
   // Ticket endpoints
   static const String myTickets = 'ticket/myTickets';

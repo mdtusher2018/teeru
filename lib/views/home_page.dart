@@ -38,7 +38,11 @@ class _HomePageState extends State<HomePage> {
               children: [
                 const Icon(Icons.location_on, size: 16),
                 const SizedBox(width: 4),
-                commonText("Thies, SN", size: 14),
+                Obx(
+                   () {
+                    return commonText(controller.address.value, size: 14,maxLine: 1);
+                  }
+                ),
               ],
             ),
             GestureDetector(
@@ -118,6 +122,7 @@ class _HomePageState extends State<HomePage> {
                                 SportsPage(
                                   categoryId: category.id,
                                   categoryName: category.name,
+                                  categoryImage: getFullImageUrl(category.image),
                                 ),
                               )!.then((value) {
                                 controller.fetchCategories();

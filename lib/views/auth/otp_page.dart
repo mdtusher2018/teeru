@@ -79,7 +79,7 @@ class OTPScreen extends StatelessWidget {
                     commonText("Didn’t get the code?".tr, isBold: true),
                     GestureDetector(
                       onTap: () {
-                        Get.back();
+                        otpController.resendOTP();
                       },
                       child: commonText(
                         "Resend".tr,

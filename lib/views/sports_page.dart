@@ -11,13 +11,14 @@ import 'package:trreu/views/ticket_details.dart';
 class SportsPage extends StatelessWidget {
   final String categoryId; // Pass category id here
   final String categoryName;
+  final String categoryImage;
 
-  SportsPage({Key? key, required this.categoryId, required this.categoryName})
+  SportsPage({Key? key, required this.categoryId, required this.categoryName,required this.categoryImage})
     : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final SportsController controller = Get.put(SportsController(categoryId));
+    final SportsController controller = Get.put(SportsController(categoryId,recivedCategoryImage: categoryImage));
 
     Widget EventCard(Event event) {
       log(event.name);

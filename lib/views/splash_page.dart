@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trreu/services/local_storage_service.dart';
@@ -23,9 +24,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void checkLogin() async {
     LocalStorageService _localStorageService = LocalStorageService();
     String? token = await _localStorageService.getToken();
+    bool rememberMe = await _localStorageService.getRememberMeToken()??false;
+    log(rememberMe.toString());
+    if(!rememberMe){
+      _localStorageService.clearAll();
+    }
     // Navigate to onboarding after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
-      if (token != null && token.isNotEmpty) {
+      if (token != null && token.isNotEmpty && rememberMe) {
         Get.off(RootPage(), transition: Transition.rightToLeft);
       } else {
         Get.off(LoginScreen(), transition: Transition.rightToLeft);

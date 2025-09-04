@@ -152,6 +152,8 @@ class ProfileScreen extends StatelessWidget {
                     LocalStorageService _localStorageService =
                         LocalStorageService();
                     _localStorageService.removeToken();
+                    _localStorageService.removeRememberMeToken();
+                    _localStorageService.clearAll();
                     Get.offAll(LoginScreen());
                   },
                 ),

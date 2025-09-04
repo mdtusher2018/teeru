@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
+// import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:trreu/utils/ApiEndpoints.dart';
 import 'local_storage_service.dart';
@@ -31,14 +31,14 @@ class ApiService {
       url,
       headers: (extraHeader != null) ? extraHeader : headers,
     );
-    log(response.body);
+    // log(response.body);
     return _processResponse(response);
   }
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> body) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
-    log('${ApiEndpoints.baseUrl}$endpoint');
-    log(body.toString());
+    // log('${ApiEndpoints.baseUrl}$endpoint');
+    // log(body.toString());
 
     final headers = await _getHeaders();
 
@@ -47,14 +47,14 @@ class ApiService {
       headers: headers,
       body: jsonEncode(body),
     );
-    log(response.body);
+    // log(response.body);
     return _processResponse(response);
   }
 
   Future<dynamic> patch(String endpoint, Map<String, dynamic> body) async {
     final url = Uri.parse('${ApiEndpoints.baseUrl}$endpoint');
-    log('PATCH Request URL: ${ApiEndpoints.baseUrl}$endpoint');
-    log('PATCH Request Body: ${body.toString()}');
+    // log('PATCH Request URL: ${ApiEndpoints.baseUrl}$endpoint');
+    // log('PATCH Request Body: ${body.toString()}');
 
     final headers = await _getHeaders();
 
@@ -64,7 +64,7 @@ class ApiService {
       body: jsonEncode(body),
     );
 
-    log('PATCH Response: ${response.body}');
+    // log('PATCH Response: ${response.body}');
 
     return _processResponse(response);
   }

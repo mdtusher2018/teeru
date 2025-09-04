@@ -86,4 +86,17 @@ class AuthService {
     );
     return SignupEmailVerifiedResponse.fromJson(response);
   }
+
+
+  Future<bool> resendOtp() async {
+
+    final response = await _apiService.patch(
+      ApiEndpoints.resendOtp,{}
+    
+    );
+
+    return response['success']??false;
+  }
+
+
 }

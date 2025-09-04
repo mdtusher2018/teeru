@@ -13,8 +13,8 @@ class EventService {
     return CategoryResponse.fromJson(response);
   }
 
-  Future<UpcomingEventsResponse> fetchUpcomingEvents() async {
-    final response = await _apiService.get(ApiEndpoints.upcomingEvents);
+  Future<UpcomingEventsResponse> fetchUpcomingEvents(double? longitude,double? latitude) async {
+    final response = await _apiService.get(ApiEndpoints.upcomingEvents(longitude, latitude));
     return UpcomingEventsResponse.fromJson(response);
   }
 

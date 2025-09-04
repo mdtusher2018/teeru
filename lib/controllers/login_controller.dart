@@ -28,6 +28,7 @@ class LoginController extends GetxController {
     bool valid = true;
 
     if (emailController.text.trim().isEmpty) {
+      commonSnackbar(title: "Empty", message: 'Email or phone is required');
       emailError.value = 'Email or phone is required';
       valid = false;
     } else {
@@ -35,6 +36,7 @@ class LoginController extends GetxController {
     }
 
     if (passwordController.text.trim().isEmpty) {
+            commonSnackbar(title: "Empty", message: 'Password is required');
       passwordError.value = 'Password is required';
       valid = false;
     } else {
@@ -58,6 +60,7 @@ class LoginController extends GetxController {
       if (response.success) {
         // Save token
         await _localStorageService.saveToken(response.data.accessToken);
+        await _localStorageService.saveRememberMeToken(rememberMe.value);
 
         // Navigate to RootPage or home
         Get.offAll(() => RootPage());

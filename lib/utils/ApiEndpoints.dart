@@ -1,9 +1,9 @@
 class ApiEndpoints {
-  // static const String baseUrl = 'https://api.teerusn.com/api/v1/';
-  // static const String baseImageUrl = 'https://api.teerusn.com';
+  static const String baseUrl = 'https://api.teerusn.com/api/v1/';
+  static const String baseImageUrl = 'https://api.teerusn.com';
 
-  static const String baseUrl = 'http://10.10.10.32:4010/api/v1/';
-  static const String baseImageUrl = 'http://10.10.10.32:4010';
+  // static const String baseUrl = 'http://206.162.244.133:4010/api/v1/';
+  // static const String baseImageUrl = 'http://206.162.244.133:4010';
   // Users
   static const String createUser = 'users/create';
   static const String createUserVerifyOtp = 'users/create-user-verify-otp';

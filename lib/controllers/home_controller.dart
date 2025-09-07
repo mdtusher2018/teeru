@@ -19,7 +19,7 @@ class HomeController extends GetxController {
 
   var categories = <Category>[].obs;
   var upcomingEvents = <Event>[].obs;
-  var address = 'Thies, SN'.obs;
+  var address = 'Address Loading...'.obs;
 
   @override
   void onInit() {
@@ -51,7 +51,7 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       debugPrint("Error fetching address: $e");
-      address.value = "Thies, SN";
+      address.value = "N/A";
     }
   }
 

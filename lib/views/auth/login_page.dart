@@ -36,7 +36,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         const Icon(Icons.location_on, size: 16),
                         const SizedBox(width: 4),
-                        commonText("Thies, SN", size: 14),
+                        Obx(
+                           () {
+                            return commonText(loginController.address.value, size: 14);
+                          }
+                        ),
                       ],
                     ),
                     GestureDetector(

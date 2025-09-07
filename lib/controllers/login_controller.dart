@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:trreu/services/auth_service.dart';
 import 'package:trreu/services/local_storage_service.dart';
@@ -19,9 +21,38 @@ class LoginController extends GetxController {
   var passwordError = ''.obs;
   var isPasswordVisible = false.obs;
   var rememberMe = false.obs;
+  var address = 'Address Loading...'.obs;
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchCurrentAddress();
+  }
+
+  Future<void> fetchCurrentAddress() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition();
+
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks.first;
+        address.value = "${place.administrativeArea}, ${place.country}";
+        log("User Address: ${address.value}");
+      } else {
+        address.value = "Address not found";
+      }
+    } catch (e) {
+      debugPrint("Error fetching address: $e");
+      address.value = "N/A";
+    }
   }
 
   bool _validate() {
@@ -36,7 +67,7 @@ class LoginController extends GetxController {
     }
 
     if (passwordController.text.trim().isEmpty) {
-            commonSnackbar(title: "Empty", message: 'Password is required');
+      commonSnackbar(title: "Empty", message: 'Password is required');
       passwordError.value = 'Password is required';
       valid = false;
     } else {
